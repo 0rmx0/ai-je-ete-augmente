@@ -70,7 +70,7 @@
       <i18n-t keypath="how.inflation.p1.p">
         <template v-slot:link>
           <a
-            href="https://ec.europa.eu/eurostat/data/database?node_code=prc_hicp_mmor"
+            href="https://ec.europa.eu/eurostat/data/database?node_code=prc_hicp_minr"
             target="_blank"
             class="underline"
           >

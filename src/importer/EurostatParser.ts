@@ -4,7 +4,7 @@ import type { CountryInflationRates } from '../components/InflationRates'
 import type { countryCode } from '../components/CountryCodes'
 import { countryCodes } from '../components/CountryCodes'
 
-const eurostatIndicatorForInflationRate = 'M,RCH_M,CP00,'
+const eurostatIndicatorForInflationRate = 'M,RCH_M,TOTAL,'
 
 export function convertEurostatTsvToJson(
   inputFilePath: string,

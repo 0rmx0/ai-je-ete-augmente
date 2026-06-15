@@ -37,11 +37,11 @@ async function main() {
   const outputDirectory = './src/assets/inflations/'
 
   // Download EU data
-  const eurostatTsvFilePath = './eurostat-prc_hicp_mmor.tsv'
+  const eurostatTsvFilePath = './eurostat-prc_hicp_minr.tsv'
   try {
     if (!fs.existsSync(eurostatTsvFilePath)) {
       await download(
-        'https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/prc_hicp_mmor?format=TSV&compressed=true',
+        'https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/prc_hicp_minr?format=TSV&compressed=true',
         eurostatTsvFilePath,
         true
       )
