@@ -53,4 +53,32 @@ describe('parsePayslipText', () => {
     expect(result.date).toBeNull()
     expect(result.income).toBeNull()
   })
+
+  it('prefers the payslip period over an earlier hire date', () => {
+    const text = [
+      'Bulletin de paie',
+      'Date d\u2019entr\u00e9e 04/1992',
+      'P\u00e9riode du 01/05/2024 au 31/05/2024',
+      'Net \u00e0 payer avant imp\u00f4t 2 435,50 \u20ac'
+    ].join('\n')
+    const result = parsePayslipText(text, options)
+    expect(result.date).toBe('2024-05')
+    expect(result.income).toBe(2435.5)
+  })
+
+  it('ignores cumulated amounts on the net line', () => {
+    const text = [
+      'Paie 01/2024',
+      'Net \u00e0 payer 2 500,00 \u20ac',
+      'Cumul net \u00e0 payer 30 000,00 \u20ac'
+    ].join('\n')
+    const result = parsePayslipText(text, options)
+    expect(result.income).toBe(2500)
+  })
+
+  it('takes the monthly amount, not the cumul column, on the same line', () => {
+    const text = ['Paie 06/2024', 'Net \u00e0 payer 2 500,00 30 000,00'].join('\n')
+    const result = parsePayslipText(text, options)
+    expect(result.income).toBe(2500)
+  })
 })

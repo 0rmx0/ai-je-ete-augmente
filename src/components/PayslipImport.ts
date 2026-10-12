@@ -23,31 +23,79 @@ async function loadPdfjs(): Promise<typeof PdfjsModule> {
   return pdfjsPromise
 }
 
+interface TextPart {
+  readonly x: number
+  readonly y: number
+  readonly width: number
+  readonly text: string
+}
+
+function partsToText(parts: TextPart[]): string {
+  if (parts.length === 0) {
+    return ''
+  }
+  const sortedParts = [...parts].sort(
+    (p1: TextPart, p2: TextPart): number => p2.y - p1.y || p1.x - p2.x
+  )
+  const lines: Array<Array<TextPart>> = []
+  let currentLine: Array<TextPart> = [sortedParts[0]]
+  let currentY = sortedParts[0].y
+  for (const part of sortedParts.slice(1)) {
+    if (Math.abs(part.y - currentY) <= 2) {
+      currentLine.push(part)
+    } else {
+      lines.push(currentLine)
+      currentLine = [part]
+      currentY = part.y
+    }
+  }
+  lines.push(currentLine)
+  return lines
+    .map((line: Array<TextPart>): string => {
+      let text = ''
+      let previousPart: TextPart | null = null
+      for (const part of line) {
+        if (
+          previousPart !== null &&
+          !previousPart.text.endsWith(' ') &&
+          !part.text.startsWith(' ') &&
+          part.x - (previousPart.x + previousPart.width) > 1
+        ) {
+          text += ' '
+        }
+        text += part.text
+        previousPart = part
+      }
+      return text
+    })
+    .join('\n')
+}
+
 export async function extractPdfText(data: ArrayBuffer): Promise<string> {
   const pdfjs = await loadPdfjs()
   const doc = await pdfjs.getDocument({ data: new Uint8Array(data) }).promise
-  let text = ''
+  const pageTexts: Array<string> = []
   for (let i = 1; i <= doc.numPages; i++) {
     const page = await doc.getPage(i)
     const content = await page.getTextContent()
+    const parts: Array<TextPart> = []
     for (const item of content.items) {
       if ('str' in item) {
         const textItem = item as TextItem
         if (textItem.str.length > 0) {
-          if (textItem.hasEOL) {
-            text += textItem.str + '\n'
-          } else {
-            text += textItem.str
-            if (textItem.str.endsWith(' ')) {
-              text += '\n'
-            }
-          }
+          parts.push({
+            x: textItem.transform[4],
+            y: textItem.transform[5],
+            width: textItem.width ?? 0,
+            text: textItem.str
+          })
         }
       }
     }
+    pageTexts.push(partsToText(parts))
   }
   doc.cleanup()
-  return text
+  return pageTexts.join('\n')
 }
 
 export async function extractFilesFromZip(data: ArrayBuffer): Promise<Map<string, Uint8Array>> {
