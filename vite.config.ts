@@ -7,6 +7,7 @@ import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/ai-je-ete-augmente/',
   plugins: [
     vue(),
     VueI18nPlugin({
