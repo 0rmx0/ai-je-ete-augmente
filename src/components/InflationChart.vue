@@ -57,8 +57,9 @@ export default defineComponent({
           {
             label: this.$t('salary.chart.datasets.1.label'),
             data: incomes,
-            backgroundColor: 'rgba(68,68,239,0.2)',
-            borderColor: 'rgb(68,68,239)',
+            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            borderColor: 'rgb(37, 99, 235)',
+            borderWidth: 2,
             pointStyle: false
           },
           {
@@ -66,8 +67,9 @@ export default defineComponent({
             data: incomesAdjusted,
             cubicInterpolationMode: 'monotone',
             fill: '-1',
-            backgroundColor: 'rgb(239, 68, 68, 0.2)',
+            backgroundColor: 'rgba(239, 68, 68, 0.12)',
             borderColor: 'rgb(239, 68, 68)',
+            borderWidth: 2,
             pointStyle: false
           }
         ]
@@ -91,6 +93,9 @@ export default defineComponent({
               display: true,
               text: this.$t('salary.chart.x.title')
             },
+            grid: {
+              display: false
+            },
             ticks: {
               callback: function (val: number, index: number) {
                 return ticks[index]
@@ -102,7 +107,18 @@ export default defineComponent({
               display: true,
               text: this.$t('salary.chart.y.title', { currency: this.configuration.currency })
             },
-            position: 'right'
+            position: 'right',
+            grid: {
+              color: 'rgba(100, 116, 139, 0.15)'
+            },
+            ticks: {
+              callback: (value: number): string => {
+                return new Intl.NumberFormat(this.configuration.locale, {
+                  notation: 'compact',
+                  maximumFractionDigits: 1
+                }).format(value)
+              }
+            }
           }
         },
         plugins: {

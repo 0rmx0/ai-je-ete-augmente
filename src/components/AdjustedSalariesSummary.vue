@@ -173,7 +173,10 @@ export default defineComponent({
       <p class="p-3 text-center text-lg">
         <i18n-t keypath="salary.summary.change.multi.adjusted" :plural="overallChangeAdjusted">
           <template v-slot:changeAdjusted>
-            <span class="font-bold text-red-500">
+            <span
+              class="font-bold"
+              :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-500'"
+            >
               <i18n-n :value="overallChangeAdjusted / 100" format="result" />
             </span>
           </template>
@@ -184,7 +187,10 @@ export default defineComponent({
       <p class="p-3 text-lg">
         <i18n-t keypath="salary.summary.change.one" :plural="overallChangeAdjusted">
           <template v-slot:changeAdjusted>
-            <span class="font-bold text-red-500">
+            <span
+              class="font-bold"
+              :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-500'"
+            >
               <i18n-n :value="overallChangeAdjusted / 100" format="result" />
             </span>
           </template>
