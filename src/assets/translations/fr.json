@@ -288,6 +288,93 @@
     "incomeMode": {
       "title": "Mode de calcul du salaire",
       "helper": "Changez ici le type de salaire saisi (mensuel net, annuel brut ou taux horaire de base). Les salaires déjà enregistrés sont réinterprétés selon le mode choisi."
+    },
+    "report": {
+      "button": "📄 Télécharger le rapport détaillé",
+      "header": {
+        "title": "# Rapport détaillé — Ai-je été augmenté ?",
+        "generated": "*Rapport généré le {date} (UTC)*",
+        "purpose": "Ce rapport contient l'intégralité des données utilisées, le détail des calculs mois par mois et les sources des taux d'inflation. Il est destiné à être partagé, notamment lors d'une négociation salariale, et permet à quiconque de vérifier indépendamment chaque résultat."
+      },
+      "configuration": {
+        "title": "## Paramètres utilisés",
+        "country": "- Pays pour les taux d'inflation : {country}",
+        "custom": "- Taux d'inflation personnalisés (saisis manuellement)",
+        "currency": "- Devise : {currency}",
+        "incomeMode": "- Mode de saisie du salaire : {mode}",
+        "imposition": "- Imposition appliquée : {imposition} %",
+        "monthlyHours": "- Heures mensuelles de référence : {hours}"
+      },
+      "incomeModes": {
+        "net-monthly": "mensuel net",
+        "gross-annual": "annuel brut",
+        "hourly-rate": "taux horaire"
+      },
+      "data": {
+        "title": "## Données utilisées",
+        "salariesTitle": "### Salaires saisis",
+        "inflationTitle": "### Taux d'inflation mensuels (%)",
+        "customNote": "Ces taux sont des taux personnalisés saisis manuellement ; ils ne proviennent pas d'une source officielle.",
+        "inflationCount": "Nombre de taux utilisés : {count} (de {from} à {to})",
+        "colKey": "Clé",
+        "colDate": "Date",
+        "colSalary": "Salaire {mode}",
+        "colMonth": "Mois",
+        "colRate": "Taux (%)",
+        "colIncome": "Revenu net mensuel",
+        "colMonthlyInflation": "Inflation du mois (%)",
+        "colMultiplier": "Multiplicateur cumulé",
+        "colAdjusted": "Salaire ajusté",
+        "colAnnounced": "Changement annoncé (%)",
+        "colReal": "Changement réel (%)"
+      },
+      "calculations": {
+        "title": "## Détail des calculs",
+        "formulas": "### Formules",
+        "formulaIncome": {
+          "net-monthly": "- Revenu mensuel net = salaire saisi",
+          "gross-annual": "- Revenu mensuel net = salaire annuel brut × (1 − imposition / 100) / 12",
+          "hourly-rate": "- Revenu mensuel net = taux horaire × heures mensuelles × (1 − imposition / 100)"
+        },
+        "formulaMultiplier": "- Multiplicateur d'inflation cumulé = ∏ (1 + taux du mois / 100), depuis le mois suivant le salaire de référence",
+        "formulaAdjusted": "- Salaire ajusté = revenu mensuel net / multiplicateur cumulé",
+        "formulaChange": "- Changement réel (%) = (salaire ajusté / salaire ajusté précédent − 1) × 100",
+        "monthlyTitle": "### Calculs mois par mois",
+        "summaryTitle": "### Synthèse",
+        "reference": "- Salaire de référence : {income} {currency} (le {date})",
+        "final": "- Salaire final : {income} {currency} (le {date})",
+        "finalAdjusted": "- Salaire final ajusté par l'inflation : {income} {currency}",
+        "overallAnnounced": "- Évolution annoncée : {change} %",
+        "overallAdjusted": "- Évolution réelle (ajustée) : {change} %",
+        "minimalRaise": "- Augmentation minimale nécessaire pour compenser l'inflation : {raise} %",
+        "minimalSalary": "- Soit un nouveau salaire de {income} {currency} {mode}"
+      },
+      "sources": {
+        "title": "## Sources",
+        "eurostat": "- Taux d'inflation : Eurostat, indice HICP (prc_hicp_minr), {link}",
+        "ons": "- Taux d'inflation : Office for National Statistics (Royaume-Uni), {link}",
+        "statcan": "- Taux d'inflation : Statistique Canada, IPC (18100006), {link}",
+        "custom": "- Taux d'inflation personnalisés saisis par l'utilisateur (aucune source officielle)",
+        "verification": "Les taux d'inflation officiels peuvent être vérifiés directement auprès des organismes ci-dessus.",
+        "app": "- Calculs réalisés par l'application « Ai-je été augmenté ? » (code source public), entièrement dans votre navigateur : aucune donnée n'est envoyée ni modifiée."
+      },
+      "warnings": {
+        "title": "## Avertissements",
+        "missing": "- Taux d'inflation inconnus pour les périodes suivantes (traités comme 0) : {dates}",
+        "lastKnown": "- Les calculs s'arrêtent au {date}, dernier taux d'inflation connu."
+      },
+      "warning": {
+        "noKnown": "Aucun taux d'inflation n'est connu, les calculs ne sont pas possibles."
+      },
+      "integrity": {
+        "title": "## Intégrité des données",
+        "explanation": "Afin de permettre de vérifier que ce rapport n'a pas été modifié après sa génération, l'empreinte SHA-256 du bloc de données JSON ci-dessous est incluse ici. N'importe qui peut recalculer cette empreinte à partir du bloc JSON : si le résultat est identique, les données n'ont pas été altérées.",
+        "hash": "- Empreinte SHA-256 des données (hexadécimal) : `{hash}`",
+        "howToVerify": "Pour vérifier : `echo -n <bloc JSON> | sha256sum` (ou en ligne via un calculateur SHA-256). Le résultat doit être identique à l'empreinte ci-dessus.",
+        "dataBlock": "### Bloc de données signé (JSON canonique)",
+        "selfHashTitle": "### Comment vérifier ce rapport ?",
+        "selfHash": "1. Recalculez l'empreinte SHA-256 du bloc JSON de la section « Intégrité des données ». 2. Comparez-la à l'empreinte indiquée dans cette même section. 3. Refaites les calculs avec les formules documentées : tout écart révèlerait une altération. Empreinte :"
+      }
     }
   }
 }
