@@ -96,7 +96,7 @@
       "error": "⚠ Attention, modification non sauvegardée car la structure json n'est pas valide",
       "helper": "Le texte doit être une structure json valide listant uniquement des nombres indexés par la date au format YYYY-MM",
       "placeholder": "{'{\"2023-07\": 0.1, \"2023-06\": -0.3, \"2023-05\": 0}'}",
-      "label": "Utiliser des taux d'inflation personnalisés ✍\uFE0F"
+      "label": "Utiliser des taux d'inflation personnalisés ✍️"
     },
     "data": {
       "reset": "⚠️ Reinitialiser les données et la configuration"
@@ -239,7 +239,7 @@
         "one": "En {period}, votre salaire n'a pas changé de valeur. | En {period}, votre salaire a perdu {changeAdjusted} de sa valeur. | En {period}, votre salaire a gagné {changeAdjusted} de sa valeur. ",
         "helper": "Ajoutez un second salaire pour voir la différence ajustée par l'inflation. "
       },
-      "custom": "Avec des taux d'inflation personnalisés ✍\uFE0F",
+      "custom": "Avec des taux d'inflation personnalisés ✍️",
       "helper": "Comment ça marche ?",
       "next": {
         "disclaimer": " depuis votre précédent changement de salaire au {date} ; et uniquement la perte depuis cette date là ; ",
@@ -259,6 +259,17 @@
       "lastKnown": " Les calculs s'arrêtent au {date}, avec le dernier taux d'inflation connu. ",
       "missings": "Attention, le taux d'inflation pour la période du {dates} n'est pas connu ! | Attention, {number} taux d'inflation sont inconnues. Il s'agit des périodes suivantes : {dates}. ",
       "noKnown": "Attention, aucun taux d'inflation n'est connu, calculs impossibles. "
+    },
+    "import": {
+      "title": "Importer des bulletins de paie",
+      "privacy": "Tout se passe dans votre navigateur : les fichiers ne sont ni envoyés ni stockés ailleurs que sur votre appareil.",
+      "label": "Sélectionnez vos bulletins de paie (PDF ou ZIP contenant des PDF)",
+      "analyze": "Analyser",
+      "processing": "Analyse de {count} fichier(s) en cours…",
+      "unrecognized": "non reconnu",
+      "duplicate": "salaire déjà renseigné en {date}",
+      "confirm": "Importer {count} salaire(s)",
+      "summary": "Résumé : {date} — {income} {currency}"
     }
   }
 }
