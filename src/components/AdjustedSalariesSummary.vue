@@ -99,6 +99,8 @@ export default defineComponent({
           return this.$t('salary.history.gross')
         case 'net-monthly':
           return this.$t('salary.history.net')
+        case 'hourly-rate':
+          return this.$t('salary.history.hourly')
         default:
           return ''
       }

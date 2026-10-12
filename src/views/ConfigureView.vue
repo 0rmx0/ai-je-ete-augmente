@@ -30,6 +30,7 @@ export default defineComponent({
         this.configuration.currency = DefaultConfiguration.currency
         this.configuration.imposition = DefaultConfiguration.imposition
         this.configuration.incomeMode = DefaultConfiguration.incomeMode
+        this.configuration.monthlyHours = DefaultConfiguration.monthlyHours
         alert('Reinitialisation effectuée !')
       }
     },
@@ -228,6 +229,26 @@ export default defineComponent({
           >
             <i18n-t keypath="configure.incomeMode.netMonthly.helper" />
           </small>
+          <input
+            type="radio"
+            value="hourly-rate"
+            required
+            v-model="configuration.incomeMode"
+            id="configIncomeHourlyRate"
+            name="configIncomeMode"
+            class="peer/hourly-rate md:ml-3"
+          />
+          <label
+            for="configIncomeHourlyRate"
+            class="mb-3 block peer-checked/hourly-rate:font-semibold md:ml-3 md:inline"
+          >
+            <i18n-t keypath="configure.incomeMode.hourlyRate.label" />
+          </label>
+          <small
+            class="my-3 hidden text-xs peer-checked/hourly-rate:block peer-hover/hourly-rate:block peer-hover/gross-annual:hidden peer-hover/net-monthly:hidden"
+          >
+            <i18n-t keypath="configure.incomeMode.hourlyRate.helper" />
+          </small>
           <div class="hidden peer-checked/gross-annual:block md:mt-3">
             <label for="configImposition">
               <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.label" />
@@ -245,6 +266,42 @@ export default defineComponent({
             />
             <p class="text-xs md:ml-3 md:inline">
               <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.helper" />
+            </p>
+          </div>
+          <div class="hidden peer-checked/hourly-rate:block md:mt-3">
+            <label for="configImpositionHourly">
+              <i18n-t keypath="configure.incomeMode.hourlyRate.imposition.label" />
+            </label>
+            <input
+              type="number"
+              size="3"
+              min="0"
+              max="100"
+              step="1"
+              required
+              v-model="configuration.imposition"
+              id="configImpositionHourly"
+              name="configImposition"
+            />
+            <p class="text-xs md:ml-3 md:inline">
+              <i18n-t keypath="configure.incomeMode.hourlyRate.imposition.helper" />
+            </p>
+            <label for="configMonthlyHours">
+              <i18n-t keypath="configure.incomeMode.hourlyRate.monthlyHours.label" />
+            </label>
+            <input
+              type="number"
+              size="6"
+              min="1"
+              max="300"
+              step="0.01"
+              required
+              v-model="configuration.monthlyHours"
+              id="configMonthlyHours"
+              name="configMonthlyHours"
+            />
+            <p class="text-xs md:ml-3 md:inline">
+              <i18n-t keypath="configure.incomeMode.hourlyRate.monthlyHours.helper" />
             </p>
           </div>
         </fieldset>

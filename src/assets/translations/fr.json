@@ -115,6 +115,18 @@
       "netMonthly": {
         "helper": "Les revenus mensuels sont directement évalués en fonction de l'inflation",
         "label": "Salaire mensuel net"
+      },
+      "hourlyRate": {
+        "helper": "Le taux horaire de base (hors primes et heures supplémentaires) est multiplié par le nombre d'heures mensuelles puis prélevé de l'imposition pour obtenir un revenu mensuel comparable dans le temps",
+        "label": "Taux horaire",
+        "imposition": {
+          "label": "Imposition (%) ",
+          "helper": "Pourcentage à retirer du taux horaire brut pour obtenir le taux horaire net"
+        },
+        "monthlyHours": {
+          "label": "Heures mensuelles ",
+          "helper": "Nombre d'heures travaillées par mois (151,67 h en temps plein en France)"
+        }
       }
     },
     "language": {
@@ -209,7 +221,8 @@
       },
       "net": "net/mois",
       "remove": "Supprimer",
-      "title": "Historique des salaires ({number})"
+      "title": "Historique des salaires ({number})",
+      "hourly": "brut/h"
     },
     "new": {
       "add": "Ajouter",
@@ -224,7 +237,8 @@
         "label": "Montant du nouveau salaire",
         "months": "Mois",
         "net": "mensuel net en {currency}",
-        "year": "Année"
+        "year": "Année",
+        "hourly": "taux horaire en {currency}"
       },
       "title": "Ajouter un salaire"
     },

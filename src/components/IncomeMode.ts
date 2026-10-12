@@ -1,1 +1,1 @@
-export type IncomeMode = 'net-monthly' | 'gross-annual'
+export type IncomeMode = 'net-monthly' | 'gross-annual' | 'hourly-rate'

@@ -73,6 +73,8 @@ export default defineComponent({
           return this.$t('salary.new.salary.gross', { currency: this.configuration.currency })
         case 'net-monthly':
           return this.$t('salary.new.salary.net', { currency: this.configuration.currency })
+        case 'hourly-rate':
+          return this.$t('salary.new.salary.hourly', { currency: this.configuration.currency })
         default:
           return ''
       }
