@@ -2,15 +2,15 @@
   "about": {
     "contribute": {
       "p1": {
-        "link": "code source is available on bitbucket",
+        "link": "on GitHub",
         "p": "If you want to contribute, {link}. "
       },
       "title": "Contribute"
     },
     "discuss": {
       "p1": {
-        "linkMastodon": "on mastodon 🦣",
-        "linkSource": "on bitbucket 🪣",
+        "linkMastodon": "sur mastodon 🧣",
+        "linkSource": "on GitHub 🪃",
         "p": "Discuss the project {linkMastodon} or directly {linkSource}. "
       },
       "title": "Discuss"
@@ -26,17 +26,30 @@
       "title": "Goal"
     },
     "legal": {
-      "p1": "No data is collected at any point. ",
+      "title": "Legal Notices",
+      "p1": "No data is collected at any point. All computations run locally in your browser; nothing you enter ever leaves your device. ",
       "p2": {
-        "link": "OVH, 2 rue Kellermann - 59100 Roubaix - France",
+        "link": "GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, United States",
         "p": "This website is hosted by {link}. "
       },
-      "title": "Legal Notices"
+      "p3": {
+        "link": "the GitHub repository",
+        "p": "Publisher and content manager: the fork maintainer, reachable via {link}. "
+      },
+      "p4": "This site is provided for informational purposes only, with no guarantee of accuracy or completeness. Inflation rates come from Eurostat, Insee, ONS and StatCan. The source code of the original project by Lars VanCiental remains the property of its author."
     },
     "why": {
       "p1": "In the course of 2022, inflation rates soared in France (and in Europe overall). Many wondered whether the annual \"raises\" would, at least, cover the rise in prices and the loss of purchasing power. ",
       "p2": "Turns out the question was relevant for all previous years, but we don't often think about it. ",
       "title": "About"
+    },
+    "hosting": {
+      "title": "Hosting",
+      "p1": "This site is a fork of the \"Ai-je été augmenté?\" project by Lars VanCiental, hosted for free on GitHub Pages.",
+      "p2": {
+        "link": "GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, United States",
+        "p": "It is hosted by {link}. "
+      }
     }
   },
   "configure": {

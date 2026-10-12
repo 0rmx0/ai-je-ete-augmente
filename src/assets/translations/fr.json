@@ -2,15 +2,15 @@
   "about": {
     "contribute": {
       "p1": {
-        "link": "les sources sont disponibles sur bitbucket",
-        "p": "Si vous souhaitez participer, {link}."
+        "link": "sur GitHub",
+        "p": "Si vous souhaitez participer, {link}. "
       },
       "title": "Contribuer"
     },
     "discuss": {
       "p1": {
-        "linkMastodon": "sur mastodon 🦣",
-        "linkSource": "sur bitbucket 🪣",
+        "linkMastodon": "sur mastodon 🧣",
+        "linkSource": "sur GitHub 🪃",
         "p": "Pour discuter du projet, rendez-vous {linkMastodon} ou directement {linkSource}. "
       },
       "title": "Discuter"
@@ -28,17 +28,30 @@
       "title": "Objectif"
     },
     "legal": {
-      "p1": "Aucune donnée n'est collectée. ",
+      "title": "Mentions Légales",
+      "p1": "Aucune donnée n'est collectée. Tous les calculs s'effectuent localement dans votre navigateur ; aucune information saisie ne quitte votre appareil. ",
       "p2": {
-        "link": "OVH, 2 rue Kellermann - 59100 Roubaix - France",
+        "link": "GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis",
         "p": "Ce site est hébergé par {link}. "
       },
-      "title": "Mentions Légales"
+      "p3": {
+        "link": "le dépôt GitHub",
+        "p": "Éditeur et responsable de la publication : le mainteneur du fork, joignable via {link}. "
+      },
+      "p4": "Ce site est fourni à titre informatif, sans garantie d'exactitude ni d'exhaustivité. Les taux d'inflation proviennent d'Eurostat, de l'Insee, de l'ONS et de StatCan. Le code source du projet original de Lars VanCiental reste la propriété de son auteur."
     },
     "why": {
       "p1": "Au cours de l'année 2022, on a pu voir les taux d'inflation s'envoler en france. La question s'est posée pour beaucoup de savoir si les \"augmentations\" annuelles allaient au moins couvrir la hausse des prix et la perte de pouvoir d'achat. ",
       "p2": "L'interrogation s'est aussi faites pour les augmentations des années précédentes. A priori, on ne pense pas à suivre l'inflation régulièrement. ",
       "title": "A propos"
+    },
+    "hosting": {
+      "title": "Hébergement",
+      "p1": "Ce site est un fork du projet « Ai-je été augmenté ? » de Lars VanCiental, hébergé gratuitement sur GitHub Pages.",
+      "p2": {
+        "link": "GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis",
+        "p": "Il est hébergé par {link}. "
+      }
     }
   },
   "configure": {
