@@ -90,7 +90,7 @@ export default defineComponent({
     type="button"
     v-bind:disabled="!canGenerate"
     v-on:click="downloadReport"
-    class="m-3 rounded border border-slate-500 p-2 hover:bg-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+    class="m-3 rounded border border-red-500 p-2 text-red-500 hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
   >
     <i18n-t keypath="salary.report.button" />
   </button>

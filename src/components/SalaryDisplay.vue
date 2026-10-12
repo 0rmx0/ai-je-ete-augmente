@@ -60,7 +60,14 @@ export default defineComponent({
 <template>
   <li class="flex-start group/salary flex" v-if="salary.originalSalary !== null">
     <div
-      class="-ml-[16px] h-[30px] w-[30px] shrink-0 rounded-full border-2 border-red-500 bg-white text-center align-middle group-hover/salary:bg-red-500"
+      class="-ml-[16px] h-[30px] w-[30px] shrink-0 rounded-full border-2 bg-white text-center align-middle"
+      :class="
+        salary.state === 'down'
+          ? 'border-red-500 text-red-500'
+          : salary.state === 'up'
+          ? 'border-green-600 text-green-600'
+          : 'border-red-500 text-red-500'
+      "
     >
       <i18n-t v-if="salary.state === 'up'" keypath="salary.history.indicator.up" />
       <i18n-t v-else-if="salary.state === 'down'" keypath="salary.history.indicator.down" />
@@ -95,7 +102,7 @@ export default defineComponent({
         <p class="text-sm text-neutral-500">
           <i18n-t keypath="salary.history.change.increase">
             <template v-slot:change>
-              <span class="text-red-500">
+              <span class="text-green-600">
                 <i18n-n :value="salary.salaryChange / 100" format="raise" />
               </span>
             </template>
@@ -104,7 +111,10 @@ export default defineComponent({
         <p class="text-sm text-neutral-500">
           <i18n-t keypath="salary.history.change.increaseAdjusted">
             <template v-slot:change>
-              <span class="font-bold text-red-500">
+              <span
+                class="font-bold"
+                :class="salary.salaryChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-500'"
+              >
                 <i18n-n :value="salary.salaryChangeAdjusted / 100" format="raise" />
               </span>
             </template>
@@ -124,7 +134,7 @@ export default defineComponent({
         <p class="text-sm text-neutral-500">
           <i18n-t keypath="salary.history.change.decreaseAdjusted">
             <template v-slot:change>
-              <span class="text-red-500">
+              <span class="font-bold text-red-500">
                 <i18n-n :value="salary.salaryChangeAdjusted / 100" format="raise" />
               </span>
             </template>
@@ -135,8 +145,9 @@ export default defineComponent({
         <i18n-t keypath="salary.history.change.remove" />
       </p>
       <button
+        type="button"
         v-on:click="removeSalary(salary)"
-        class="rounded border border-yellow-100 p-1 text-sm text-slate-300 hover:bg-yellow-300 hover:text-white group-hover/salary:border-yellow-300 group-hover/salary:text-black"
+        class="mt-1 rounded border border-slate-300 p-1 text-xs text-slate-500 hover:border-red-500 hover:bg-red-500 hover:text-white"
       >
         <i18n-t keypath="salary.history.remove" />
       </button>

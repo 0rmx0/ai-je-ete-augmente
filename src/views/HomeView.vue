@@ -195,7 +195,7 @@ export default defineComponent({
       <salary-new v-on:addSalary="addSalary" v-bind:salaries="salaries" v-bind:new-key="nextKey" />
     </section>
     <section class="grow">
-      <div class="sticky top-0">
+      <div class="sticky top-0 z-10 bg-white pb-2 pt-5">
         <inflation-chart :adjusted-salaries="adjustedSalaries" />
         <p v-if="salaries.length > 0" class="mx-5 p-2 text-sm italic">
           <i18n-t v-if="missingInflationRates[1] !== null" keypath="salary.warning.lastKnown">

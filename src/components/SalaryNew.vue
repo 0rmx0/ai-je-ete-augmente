@@ -121,7 +121,8 @@ export default defineComponent({
 <template>
   <p
     v-if="errorMessage !== ''"
-    class="mt-3 rounded border border-orange-500 p-2 text-sm text-orange-500"
+    role="alert"
+    class="mt-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
   >
     {{ errorMessage }}
   </p>
@@ -173,7 +174,7 @@ export default defineComponent({
     />
     <button
       type="submit"
-      class="mt-3 rounded border border-green-800 p-2 hover:bg-green-800 hover:text-white"
+      class="mt-3 rounded border border-green-700 bg-green-700 p-2 text-white hover:border-green-800 hover:bg-green-800"
     >
       <i18n-t keypath="salary.new.add" />
     </button>

@@ -53,21 +53,35 @@ export default {
         <i18n-t keypath="menu.title" />
       </RouterLink>
     </h1>
-    <nav class="divide-y divide-dashed md:flex md:grow md:flex-row md:justify-end md:divide-none">
-      <RouterLink to="/" class="block p-5 hover:bg-red-600 md:hidden lg:block">
+    <nav
+      class="divide-y divide-dashed md:flex md:grow md:flex-row md:justify-end md:divide-none"
+      aria-label="Menu"
+    >
+      <RouterLink
+        to="/"
+        class="block p-5 hover:bg-red-600 aria-[current=page]:font-bold aria-[current=page]:underline"
+      >
         <i18n-t keypath="menu.home" />
       </RouterLink>
-      <RouterLink to="/configure" class="block p-5 hover:bg-red-600">
+      <RouterLink
+        to="/configure"
+        class="block p-5 hover:bg-red-600 aria-[current=page]:font-bold aria-[current=page]:underline"
+      >
         <i18n-t keypath="menu.configure" />
       </RouterLink>
-      <RouterLink to="/how" class="block p-5 hover:bg-red-600">
+      <RouterLink
+        to="/how"
+        class="block p-5 hover:bg-red-600 aria-[current=page]:font-bold aria-[current=page]:underline"
+      >
         <i18n-t keypath="menu.how" />
       </RouterLink>
-      <RouterLink to="/about" class="block p-5 hover:bg-red-600">
+      <RouterLink
+        to="/about"
+        class="block p-5 hover:bg-red-600 aria-[current=page]:font-bold aria-[current=page]:underline"
+      >
         <i18n-t keypath="menu.about" />
       </RouterLink>
     </nav>
   </header>
-
   <RouterView />
 </template>
