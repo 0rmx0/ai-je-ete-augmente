@@ -10,6 +10,7 @@ import { AdjustedSalaryCreateListUpToDate } from '@/components/AdjustedSalary'
 import type { CountryInflationRates, InflationRates } from '@/components/InflationRates'
 import AdjustedSalariesSummary from '@/components/AdjustedSalariesSummary.vue'
 import IncomeModeSelect from '@/components/IncomeModeSelect.vue'
+import SalaryReportButton from '@/components/SalaryReportButton.vue'
 import type { Configuration } from '@/components/SharedConfiguration'
 import { SharedConfiguration } from '@/components/SharedConfiguration'
 
@@ -19,6 +20,7 @@ export default defineComponent({
     InflationChart,
     IncomeModeSelect,
     SalaryDisplay,
+    SalaryReportButton,
     SalaryNew,
     SalaryImport
   },
@@ -174,6 +176,17 @@ export default defineComponent({
         </blockquote>
         <income-mode-select class="mt-3" />
       </details>
+      <salary-report-button
+        v-bind:salaries="salaries"
+        v-bind:adjusted-salaries="adjustedSalaries"
+        v-bind:inflation-rates="
+          configuration.useCustomInflation && configuration.customInflation !== null
+            ? configuration.customInflation
+            : inflationRates[configuration.country] ?? {}
+        "
+        v-bind:missing-inflation-rates="missingInflationRates[0]"
+        v-bind:last-known-inflation-rate="missingInflationRates[1]"
+      />
       <salary-import
         v-on:addSalaries="addSalaries"
         v-bind:salaries="salaries"

@@ -286,6 +286,93 @@
     "incomeMode": {
       "title": "Salary calculation mode",
       "helper": "Change here the type of salary entered (monthly net, annual gross or base hourly rate). Salaries already recorded are reinterpreted according to the selected mode."
+    },
+    "report": {
+      "button": "📄 Download the detailed report",
+      "header": {
+        "title": "# Detailed report — Did I get a raise?",
+        "generated": "*Report generated on {date} (UTC)*",
+        "purpose": "This report contains all the data used, the detailed month-by-month calculations and the sources of the inflation rates. It is meant to be shared, especially during a salary negotiation, and allows anyone to independently verify every result."
+      },
+      "configuration": {
+        "title": "## Parameters used",
+        "country": "- Country for the inflation rates: {country}",
+        "custom": "- Custom inflation rates (entered manually)",
+        "currency": "- Currency: {currency}",
+        "incomeMode": "- Salary input mode: {mode}",
+        "imposition": "- Applied taxation: {imposition}%",
+        "monthlyHours": "- Monthly reference hours: {hours}"
+      },
+      "incomeModes": {
+        "net-monthly": "net monthly",
+        "gross-annual": "gross annual",
+        "hourly-rate": "hourly rate"
+      },
+      "data": {
+        "title": "## Data used",
+        "salariesTitle": "### Entered salaries",
+        "inflationTitle": "### Monthly inflation rates (%)",
+        "customNote": "These rates are custom rates entered manually; they do not come from an official source.",
+        "inflationCount": "Number of rates used: {count} (from {from} to {to})",
+        "colKey": "Key",
+        "colDate": "Date",
+        "colSalary": "Salary {mode}",
+        "colMonth": "Month",
+        "colRate": "Rate (%)",
+        "colIncome": "Net monthly income",
+        "colMonthlyInflation": "Monthly inflation (%)",
+        "colMultiplier": "Cumulated multiplier",
+        "colAdjusted": "Adjusted salary",
+        "colAnnounced": "Announced change (%)",
+        "colReal": "Real change (%)"
+      },
+      "calculations": {
+        "title": "## Calculation details",
+        "formulas": "### Formulas",
+        "formulaIncome": {
+          "net-monthly": "- Net monthly income = entered salary",
+          "gross-annual": "- Net monthly income = gross annual salary × (1 − taxation / 100) / 12",
+          "hourly-rate": "- Net monthly income = hourly rate × monthly hours × (1 − taxation / 100)"
+        },
+        "formulaMultiplier": "- Cumulated inflation multiplier = ∏ (1 + monthly rate / 100), starting from the month after the reference salary",
+        "formulaAdjusted": "- Adjusted salary = net monthly income / cumulated multiplier",
+        "formulaChange": "- Real change (%) = (adjusted salary / previous adjusted salary − 1) × 100",
+        "monthlyTitle": "### Month-by-month calculations",
+        "summaryTitle": "### Summary",
+        "reference": "- Reference salary: {income} {currency} (on {date})",
+        "final": "- Final salary: {income} {currency} (on {date})",
+        "finalAdjusted": "- Final salary adjusted with inflation: {income} {currency}",
+        "overallAnnounced": "- Announced evolution: {change}%",
+        "overallAdjusted": "- Real (adjusted) evolution: {change}%",
+        "minimalRaise": "- Minimal raise required to compensate inflation: {raise}%",
+        "minimalSalary": "- Meaning a new salary of {income} {currency} {mode}"
+      },
+      "sources": {
+        "title": "## Sources",
+        "eurostat": "- Inflation rates: Eurostat, HICP index (prc_hicp_minr), {link}",
+        "ons": "- Inflation rates: Office for National Statistics (UK), {link}",
+        "statcan": "- Inflation rates: Statistics Canada, CPI (18100006), {link}",
+        "custom": "- Custom inflation rates entered by the user (no official source)",
+        "verification": "The official inflation rates can be checked directly with the organizations above.",
+        "app": "- Calculations performed by the “Did I get a raise?” app (public source code), entirely in your browser: no data is sent or altered."
+      },
+      "warnings": {
+        "title": "## Warnings",
+        "missing": "- Unknown inflation rates for the following periods (treated as 0): {dates}",
+        "lastKnown": "- Calculations stop on {date}, the last known inflation rate."
+      },
+      "warning": {
+        "noKnown": "No known inflation rate, calculations cannot be done."
+      },
+      "integrity": {
+        "title": "## Data integrity",
+        "explanation": "So that anyone can verify this report was not modified after its generation, the SHA-256 fingerprint of the JSON data block below is included here. Anyone can recompute this fingerprint from the JSON block: if the result matches, the data has not been tampered with.",
+        "hash": "- SHA-256 fingerprint of the data (hexadecimal): `{hash}`",
+        "howToVerify": "To verify: `echo -n <JSON block> | sha256sum` (or using any online SHA-256 calculator). The result must match the fingerprint above.",
+        "dataBlock": "### Signed data block (canonical JSON)",
+        "selfHashTitle": "### How to verify this report?",
+        "selfHash": "1. Recompute the SHA-256 fingerprint of the JSON block from the “Data integrity” section. 2. Compare it with the fingerprint given in that same section. 3. Redo the calculations with the documented formulas: any difference reveals an alteration. Fingerprint:"
+      }
     }
   }
 }
