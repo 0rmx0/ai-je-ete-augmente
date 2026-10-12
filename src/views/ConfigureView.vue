@@ -4,8 +4,10 @@ import type { Configuration } from '@/components/SharedConfiguration'
 import { SharedConfiguration, DefaultConfiguration } from '@/components/SharedConfiguration'
 import type { countryCode } from '@/components/CountryCodes'
 import { countryCodes } from '@/components/CountryCodes'
+import IncomeModeSelect from '@/components/IncomeModeSelect.vue'
 
 export default defineComponent({
+  components: { IncomeModeSelect },
   data() {
     return {
       configuration: SharedConfiguration as Configuration,
@@ -185,126 +187,7 @@ export default defineComponent({
           <i18n-t keypath="configure.currency.helper" />
         </small>
 
-        <fieldset class="mt-3">
-          <legend class="block">
-            <i18n-t keypath="configure.incomeMode.label" />
-          </legend>
-          <input
-            type="radio"
-            value="gross-annual"
-            required
-            v-model="configuration.incomeMode"
-            id="configIncomeGrossAnnual"
-            name="configIncomeMode"
-            class="peer/gross-annual"
-          />
-          <label
-            for="configIncomeGrossAnnual"
-            class="mb-3 block peer-checked/gross-annual:font-semibold md:ml-3 md:inline"
-          >
-            <i18n-t keypath="configure.incomeMode.grossAnnual.label" />
-          </label>
-          <input
-            type="radio"
-            value="net-monthly"
-            required
-            v-model="configuration.incomeMode"
-            id="configIncomeNetMonthly"
-            name="configIncomeMode"
-            class="peer/net-monthly md:ml-3"
-          />
-          <label
-            for="configIncomeNetMonthly"
-            class="mb-3 block peer-checked/net-monthly:font-semibold md:ml-3 md:inline"
-          >
-            <i18n-t keypath="configure.incomeMode.netMonthly.label" />
-          </label>
-          <small
-            class="my-3 hidden text-xs peer-checked/gross-annual:block peer-hover/gross-annual:block peer-hover/net-monthly:hidden"
-          >
-            <i18n-t keypath="configure.incomeMode.grossAnnual.helper" />
-          </small>
-          <small
-            class="my-3 hidden text-xs peer-checked/net-monthly:block peer-hover/net-monthly:block peer-hover/gross-annual:hidden"
-          >
-            <i18n-t keypath="configure.incomeMode.netMonthly.helper" />
-          </small>
-          <input
-            type="radio"
-            value="hourly-rate"
-            required
-            v-model="configuration.incomeMode"
-            id="configIncomeHourlyRate"
-            name="configIncomeMode"
-            class="peer/hourly-rate md:ml-3"
-          />
-          <label
-            for="configIncomeHourlyRate"
-            class="mb-3 block peer-checked/hourly-rate:font-semibold md:ml-3 md:inline"
-          >
-            <i18n-t keypath="configure.incomeMode.hourlyRate.label" />
-          </label>
-          <small
-            class="my-3 hidden text-xs peer-checked/hourly-rate:block peer-hover/hourly-rate:block peer-hover/gross-annual:hidden peer-hover/net-monthly:hidden"
-          >
-            <i18n-t keypath="configure.incomeMode.hourlyRate.helper" />
-          </small>
-          <div class="hidden peer-checked/gross-annual:block md:mt-3">
-            <label for="configImposition">
-              <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.label" />
-            </label>
-            <input
-              type="number"
-              size="3"
-              min="0"
-              max="100"
-              step="1"
-              required
-              v-model="configuration.imposition"
-              id="configImposition"
-              name="configImposition"
-            />
-            <p class="text-xs md:ml-3 md:inline">
-              <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.helper" />
-            </p>
-          </div>
-          <div class="hidden peer-checked/hourly-rate:block md:mt-3">
-            <label for="configImpositionHourly">
-              <i18n-t keypath="configure.incomeMode.hourlyRate.imposition.label" />
-            </label>
-            <input
-              type="number"
-              size="3"
-              min="0"
-              max="100"
-              step="1"
-              required
-              v-model="configuration.imposition"
-              id="configImpositionHourly"
-              name="configImposition"
-            />
-            <p class="text-xs md:ml-3 md:inline">
-              <i18n-t keypath="configure.incomeMode.hourlyRate.imposition.helper" />
-            </p>
-            <label for="configMonthlyHours">
-              <i18n-t keypath="configure.incomeMode.hourlyRate.monthlyHours.label" />
-            </label>
-            <input
-              type="number"
-              size="6"
-              min="1"
-              max="300"
-              step="0.01"
-              required
-              v-model="configuration.monthlyHours"
-              id="configMonthlyHours"
-              name="configMonthlyHours"
-            />
-            <p class="text-xs md:ml-3 md:inline">
-              <i18n-t keypath="configure.incomeMode.hourlyRate.monthlyHours.helper" />
-            </p>
-          </div>
-        </fieldset>
+        <income-mode-select class="mt-3" />
       </form>
       <form class="mb-5 pt-5" v-on:submit.prevent="reset()">
         <button

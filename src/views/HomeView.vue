@@ -9,11 +9,19 @@ import { defineComponent } from 'vue'
 import { AdjustedSalaryCreateListUpToDate } from '@/components/AdjustedSalary'
 import type { CountryInflationRates, InflationRates } from '@/components/InflationRates'
 import AdjustedSalariesSummary from '@/components/AdjustedSalariesSummary.vue'
+import IncomeModeSelect from '@/components/IncomeModeSelect.vue'
 import type { Configuration } from '@/components/SharedConfiguration'
 import { SharedConfiguration } from '@/components/SharedConfiguration'
 
 export default defineComponent({
-  components: { AdjustedSalariesSummary, InflationChart, SalaryDisplay, SalaryNew, SalaryImport },
+  components: {
+    AdjustedSalariesSummary,
+    InflationChart,
+    IncomeModeSelect,
+    SalaryDisplay,
+    SalaryNew,
+    SalaryImport
+  },
   data() {
     return {
       configuration: SharedConfiguration as Configuration,
@@ -157,6 +165,15 @@ export default defineComponent({
           />
         </ol>
       </div>
+      <details class="mb-5">
+        <summary class="cursor-pointer text-slate-800">
+          <i18n-t keypath="salary.incomeMode.title" />
+        </summary>
+        <blockquote class="mt-3 rounded border border-slate-300 p-3 text-sm text-slate-500">
+          <i18n-t keypath="salary.incomeMode.helper" />
+        </blockquote>
+        <income-mode-select class="mt-3" />
+      </details>
       <salary-import
         v-on:addSalaries="addSalaries"
         v-bind:salaries="salaries"
