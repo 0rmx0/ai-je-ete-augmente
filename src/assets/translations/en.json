@@ -94,7 +94,7 @@
       "error": "⚠ Warning, pending modification not saved as the json data is not yet valid",
       "helper": "Text must be a valid json structure listing only numbers with keys representing the date with format YYYY-MM",
       "placeholder": "{'{\"2023-07\": 0.1, \"2023-06\": -0.3, \"2023-05\": 0}'}",
-      "label": "Use custom inflation rates ✍\uFE0F"
+      "label": "Use custom inflation rates ✍️"
     },
     "data": {
       "reset": "⚠️ Reset saved data and configuration"
@@ -237,7 +237,7 @@
         "one": "In {period}, you salary valuation didn't change. | In {period}, your salary lost {changeAdjusted} of its value. | In {period}, you salary valuation increased by {changeAdjusted}. ",
         "helper": "Add another salary to see the gap between them adjusted with the inflation. "
       },
-      "custom": "Using custom inflation rates ✍\uFE0F",
+      "custom": "Using custom inflation rates ✍️",
       "helper": "How does it work?",
       "next": {
         "disclaimer": " since your last change of salary at {date}; and only the loss since this date; ",
@@ -257,6 +257,17 @@
       "lastKnown": "Calculation stop on {date}, with the last known inflation rate. ",
       "missings": "Warning, inflation rate for {dates} is unknown! | Warning, {number} inflation rates are unknown for the following periods: {dates}. ",
       "noKnown": "Warning, no known inflation rate! Calculations cannot be done. "
+    },
+    "import": {
+      "title": "Import payslips",
+      "privacy": "Everything happens in your browser: files are neither sent nor stored anywhere other than on your device.",
+      "label": "Select your payslips (PDF or ZIP containing PDFs)",
+      "analyze": "Analyze",
+      "processing": "Analyzing {count} file(s)…",
+      "unrecognized": "unrecognized",
+      "duplicate": "salary already set for {date}",
+      "confirm": "Import {count} salary entries",
+      "summary": "Summary: {date} — {income} {currency}"
     }
   }
 }
