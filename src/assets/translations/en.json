@@ -282,6 +282,10 @@
       "duplicate": "salary already set for {date}",
       "confirm": "Import {count} salary entries",
       "summary": "Summary: {date} — {income} {currency}"
+    },
+    "incomeMode": {
+      "title": "Salary calculation mode",
+      "helper": "Change here the type of salary entered (monthly net, annual gross or base hourly rate). Salaries already recorded are reinterpreted according to the selected mode."
     }
   }
 }

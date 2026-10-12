@@ -284,6 +284,10 @@
       "duplicate": "salaire déjà renseigné en {date}",
       "confirm": "Importer {count} salaire(s)",
       "summary": "Résumé : {date} — {income} {currency}"
+    },
+    "incomeMode": {
+      "title": "Mode de calcul du salaire",
+      "helper": "Changez ici le type de salaire saisi (mensuel net, annuel brut ou taux horaire de base). Les salaires déjà enregistrés sont réinterprétés selon le mode choisi."
     }
   }
 }
