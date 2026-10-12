@@ -290,7 +290,7 @@
       "helper": "Changez ici le type de salaire saisi (mensuel net, annuel brut ou taux horaire de base). Les salaires déjà enregistrés sont réinterprétés selon le mode choisi."
     },
     "report": {
-      "button": "📄 Télécharger le rapport détaillé",
+      "button": "📄 Télécharger le rapport PDF",
       "header": {
         "title": "# Rapport détaillé — Ai-je été augmenté ?",
         "generated": "*Rapport généré le {date} (UTC)*",

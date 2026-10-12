@@ -288,7 +288,7 @@
       "helper": "Change here the type of salary entered (monthly net, annual gross or base hourly rate). Salaries already recorded are reinterpreted according to the selected mode."
     },
     "report": {
-      "button": "📄 Download the detailed report",
+      "button": "📄 Download the PDF report",
       "header": {
         "title": "# Detailed report — Did I get a raise?",
         "generated": "*Report generated on {date} (UTC)*",
