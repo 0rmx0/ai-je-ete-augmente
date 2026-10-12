@@ -84,11 +84,7 @@
     <p class="mb-3 p-3">
       <i18n-t keypath="about.contribute.p1.p">
         <template v-slot:link>
-          <a
-            href="https://bitbucket.org/Lars-VanCiental/ai-je-ete-augmente/src/master/"
-            target="_blank"
-            class="underline"
-          >
+          <a href="https://github.com/0rmx0/ai-je-ete-augmente" target="_blank" class="underline">
             <i18n-t keypath="about.contribute.p1.link" />
           </a>
         </template>
@@ -106,11 +102,26 @@
         </template>
         <template v-slot:linkSource>
           <a
-            href="https://bitbucket.org/Lars-VanCiental/ai-je-ete-augmente/issues?status=new&status=open"
+            href="https://github.com/0rmx0/ai-je-ete-augmente/issues"
             target="_blank"
             class="underline"
           >
             <i18n-t keypath="about.discuss.p1.linkSource" />
+          </a>
+        </template>
+      </i18n-t>
+    </p>
+    <h2 class="my-5 text-lg text-slate-800">
+      <i18n-t keypath="about.hosting.title" />
+    </h2>
+    <p class="mb-3 p-3">
+      <i18n-t keypath="about.hosting.p1" />
+    </p>
+    <p class="mb-3 p-3">
+      <i18n-t keypath="about.hosting.p2.p">
+        <template v-slot:link>
+          <a href="https://github.com/site-terms" target="_blank" class="underline">
+            <i18n-t keypath="about.hosting.p2.link" />
           </a>
         </template>
       </i18n-t>
@@ -124,15 +135,23 @@
     <p class="mb-3 p-3">
       <i18n-t keypath="about.legal.p2.p">
         <template v-slot:link>
-          <a
-            href="https://www.ovhcloud.com/fr/terms-and-conditions/"
-            target="_blank"
-            class="underline"
-          >
+          <a href="https://github.com/site-terms" target="_blank" class="underline">
             <i18n-t keypath="about.legal.p2.link" />
           </a>
         </template>
       </i18n-t>
+    </p>
+    <p class="mb-3 p-3">
+      <i18n-t keypath="about.legal.p3.p">
+        <template v-slot:link>
+          <a href="https://github.com/0rmx0/ai-je-ete-augmente" target="_blank" class="underline">
+            <i18n-t keypath="about.legal.p3.link" />
+          </a>
+        </template>
+      </i18n-t>
+    </p>
+    <p class="mb-3 p-3">
+      <i18n-t keypath="about.legal.p4" />
     </p>
   </main>
 </template>
