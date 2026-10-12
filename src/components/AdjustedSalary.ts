@@ -13,11 +13,19 @@ export interface AdjustedSalary {
   readonly state: 'initial' | 'up' | 'down'
 }
 
+export function toMonthlyNetIncome(income: number): number {
+  switch (SharedConfiguration.incomeMode) {
+    case 'gross-annual':
+      return (income * (1 - SharedConfiguration.imposition / 100)) / 12
+    case 'hourly-rate':
+      return income * SharedConfiguration.monthlyHours * (1 - SharedConfiguration.imposition / 100)
+    default:
+      return income
+  }
+}
+
 export function AdjustedSalaryCreateFirst(salary: Salary): AdjustedSalary {
-  const monthlyIncome: number =
-    SharedConfiguration.incomeMode === 'gross-annual'
-      ? (salary.income * (1 - SharedConfiguration.imposition / 100)) / 12
-      : salary.income
+  const monthlyIncome: number = toMonthlyNetIncome(salary.income)
 
   return {
     date: salary.date,
@@ -36,10 +44,7 @@ export function AdjustedSalaryCreateFromPrevious(
   lastSalary: AdjustedSalary,
   cumulatedInflationMultiplier: number
 ): AdjustedSalary {
-  const monthlyIncome: number =
-    SharedConfiguration.incomeMode === 'gross-annual'
-      ? (salary.income * (1 - SharedConfiguration.imposition / 100)) / 12
-      : salary.income
+  const monthlyIncome: number = toMonthlyNetIncome(salary.income)
 
   return {
     date: salary.date,

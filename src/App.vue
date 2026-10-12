@@ -22,6 +22,8 @@ export default {
         parsedConfiguration.imposition ?? DefaultConfiguration.imposition
       this.configuration.incomeMode =
         parsedConfiguration.incomeMode ?? DefaultConfiguration.incomeMode
+      this.configuration.monthlyHours =
+        parsedConfiguration.monthlyHours ?? DefaultConfiguration.monthlyHours
       this.configuration.locale = parsedConfiguration.locale ?? DefaultConfiguration.locale
       this.configuration.useCustomInflation =
         parsedConfiguration.useCustomInflation ?? DefaultConfiguration.useCustomInflation

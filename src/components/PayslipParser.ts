@@ -4,7 +4,7 @@ export interface PayslipData {
 }
 
 export interface PayslipParseOptions {
-  readonly incomeMode: 'net-monthly' | 'gross-annual'
+  readonly incomeMode: 'net-monthly' | 'gross-annual' | 'hourly-rate'
   readonly today?: Date
 }
 
@@ -45,6 +45,22 @@ const NET_LABELS: Array<RegExp> = [
 ]
 
 const GROSS_LABELS: Array<RegExp> = [/salaire brut/, /brut/i, /gross pay/, /gross salary/]
+
+const HOURLY_LABELS: Array<RegExp> = [
+  /taux horaire (?:de base |brut |net )?/,
+  /salaire horaire/,
+  /salaire de base/,
+  /hourly (?:rate|wage|pay)/,
+  /rate per hour/
+]
+
+const HOURLY_EXCLUDED_LABELS: Array<RegExp> = [
+  /major/,
+  /supplement|suppl/,
+  /overtime/,
+  /cong/,
+  /prime/
+]
 
 export function normalize(text: string): string {
   return text
@@ -181,7 +197,7 @@ function findDate(text: string, today: Date): string | null {
 function findIncome(text: string, labels: Array<RegExp>): number | null {
   const lines = text.split(/\r?\n/)
   const lineAmounts = (line: string): Array<number> =>
-    [...line.matchAll(/-?\d[\d \u00a0]*[.,]?\d{0,2}\s?\u20ac?/g)]
+    [...line.matchAll(/-?\d[\d \u00a0]*[.,]?\d{0,4}\s?\u20ac?/g)]
       .map((amount: RegExpMatchArray): number | null => parseAmount(amount[0]))
       .filter((amount: number | null): boolean => amount !== null && amount > 0) as Array<number>
   const candidateLines = (index: number): Array<number> => {
@@ -214,11 +230,50 @@ function findIncome(text: string, labels: Array<RegExp>): number | null {
   return null
 }
 
+function findHourlyIncome(text: string, hourlyLabels: Array<RegExp>): number | null {
+  const lines = text.split(/\r?\n/)
+  const lineAmounts = (line: string): Array<number> =>
+    [...line.matchAll(/-?\d[\d \u00a0]*[.,]?\d{0,4}\s?\u20ac?/g)]
+      .map((amount: RegExpMatchArray): number | null => parseAmount(amount[0]))
+      .filter((amount: number | null): boolean => amount !== null && amount > 0) as Array<number>
+  for (let index = 0; index < lines.length; index++) {
+    const normalizedLine = normalize(lines[index])
+    const isExcluded = HOURLY_EXCLUDED_LABELS.some((excluded: RegExp): boolean =>
+      excluded.test(normalizedLine)
+    )
+    if (isExcluded || /cumul|depuis|year.to.date|ytd/.test(normalizedLine)) {
+      continue
+    }
+    const matchesHourlyLabel = hourlyLabels.some((label: RegExp): boolean =>
+      label.test(normalizedLine)
+    )
+    if (!matchesHourlyLabel) {
+      continue
+    }
+    const amounts = lineAmounts(lines[index])
+    if (amounts.length === 0) {
+      continue
+    }
+    const rateCandidates = amounts.filter((amount: number): boolean => amount >= 5 && amount < 200)
+    if (rateCandidates.length > 0) {
+      return rateCandidates[rateCandidates.length - 1]
+    }
+  }
+  return findIncome(text, hourlyLabels)
+}
+
 export function parsePayslipText(text: string, options: PayslipParseOptions): PayslipData {
   const today = options.today ?? new Date()
-  const labels = options.incomeMode === 'gross-annual' ? GROSS_LABELS : NET_LABELS
+  let labels = NET_LABELS
+  let income: number | null = null
+  if (options.incomeMode === 'gross-annual') {
+    labels = GROSS_LABELS
+  } else if (options.incomeMode === 'hourly-rate') {
+    income = findHourlyIncome(text, HOURLY_LABELS)
+    labels = []
+  }
   return {
     date: findDate(text, today),
-    income: findIncome(text, labels)
+    income: income !== null ? income : findIncome(text, labels)
   }
 }

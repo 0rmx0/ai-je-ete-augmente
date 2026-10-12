@@ -13,6 +13,7 @@ export interface Configuration {
   imposition: number
   incomeMode: IncomeMode
   locale: string
+  monthlyHours: number
   useCustomInflation: boolean
 }
 
@@ -23,6 +24,7 @@ export const DefaultConfiguration: Configuration = {
   imposition: 35 as number,
   incomeMode: 'net-monthly' as IncomeMode,
   locale: (navigatorLang === 'fr' ? 'fr' : 'en') as string,
+  monthlyHours: 151.67 as number,
   useCustomInflation: false as boolean
 }
 
@@ -33,5 +35,6 @@ export const SharedConfiguration: Configuration = reactive({
   imposition: DefaultConfiguration.imposition,
   incomeMode: DefaultConfiguration.incomeMode,
   locale: DefaultConfiguration.locale,
+  monthlyHours: DefaultConfiguration.monthlyHours,
   useCustomInflation: DefaultConfiguration.useCustomInflation
 })

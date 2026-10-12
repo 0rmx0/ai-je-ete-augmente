@@ -48,6 +48,36 @@ describe('parsePayslipText', () => {
     expect(result.income).toBe(3200)
   })
 
+  it('extracts the base hourly rate in hourly-rate mode', () => {
+    const text = [
+      'Paie 03/2024',
+      'Taux horaire 12,50 \u20ac',
+      'Net \u00e0 payer 1 898,40 \u20ac',
+      'Prime exceptionnelle 150,00 \u20ac'
+    ].join('\n')
+    const result = parsePayslipText(text, { incomeMode: 'hourly-rate', today })
+    expect(result.date).toBe('2024-03')
+    expect(result.income).toBe(12.5)
+  })
+
+  it('extracts the base hourly rate from a column-layout payslip', () => {
+    const text = [
+      'El\u00e9ments de paie Base Taux A d\u00e9duire A payer Charges patronales',
+      'P\u00e9riode : Septembre 2026',
+      'Salaire de base 151.67 16.3891 2 485.74',
+      'Heures mensuelles major\u00e9es 25% 11.57 20.4864 237.03',
+      'Prime de vacances 27.23',
+      'Salaire brut 2 750.00',
+      'Net \u00e0 payer avant imp\u00f4t sur le revenu 2 048.64'
+    ].join('\n')
+    const result = parsePayslipText(text, {
+      incomeMode: 'hourly-rate',
+      today: new Date('2026-10-12T12:00:00Z')
+    })
+    expect(result.date).toBe('2026-09')
+    expect(result.income).toBe(16.3891)
+  })
+
   it('returns nulls when nothing matches', () => {
     const result = parsePayslipText('facture sans montant', options)
     expect(result.date).toBeNull()

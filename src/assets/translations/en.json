@@ -113,6 +113,18 @@
       "netMonthly": {
         "helper": "Monthly income is directly evaluated against the inflation rate",
         "label": "Monthly net salary"
+      },
+      "hourlyRate": {
+        "helper": "The base hourly rate (excluding bonuses and overtime) is multiplied by the monthly hours then reduced by the imposition to get a monthly income comparable over time",
+        "label": "Hourly rate",
+        "imposition": {
+          "label": "Imposition (%) ",
+          "helper": "Percent withdrawn from the gross hourly rate to get the net hourly rate"
+        },
+        "monthlyHours": {
+          "label": "Monthly hours ",
+          "helper": "Working hours per month (151.67 h for full-time in France)"
+        }
       }
     },
     "language": {
@@ -207,7 +219,8 @@
       },
       "net": "net/month",
       "remove": "Remove",
-      "title": "Salary history ({number})"
+      "title": "Salary history ({number})",
+      "hourly": "gross/h"
     },
     "new": {
       "add": "Add",
@@ -222,7 +235,8 @@
         "label": "Amount of the new salary",
         "months": "Month",
         "net": "net monthly in {currency}",
-        "year": "Year"
+        "year": "Year",
+        "hourly": "hourly rate in {currency}"
       },
       "title": "Add a salary"
     },

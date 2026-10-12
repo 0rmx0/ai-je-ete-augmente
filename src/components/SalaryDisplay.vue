@@ -37,6 +37,8 @@ export default defineComponent({
           return this.$t('salary.history.gross')
         case 'net-monthly':
           return this.$t('salary.history.net')
+        case 'hourly-rate':
+          return this.$t('salary.history.hourly')
         default:
           return ''
       }
@@ -139,7 +141,9 @@ export default defineComponent({
         <i18n-t keypath="salary.history.remove" />
       </button>
       <div
-        v-if="configuration.incomeMode === 'gross-annual'"
+        v-if="
+          configuration.incomeMode === 'gross-annual' || configuration.incomeMode === 'hourly-rate'
+        "
         class="md:auto hidden whitespace-nowrap md:absolute md:left-full md:top-5 md:z-10 md:-ml-5 md:rounded-r-3xl md:border md:bg-white md:p-3 md:shadow-md md:shadow-red-500 md:group-hover/salary:block"
       >
         <h4 class="m-1 text-lg font-medium">
