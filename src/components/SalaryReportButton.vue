@@ -6,7 +6,8 @@ import type { Configuration } from '@/components/SharedConfiguration'
 import { SharedConfiguration } from '@/components/SharedConfiguration'
 import type { Salary } from '@/components/Salary'
 import type { InflationRates } from '@/components/InflationRates'
-import { generateSalaryReportWithHash, sha256Hex } from '@/components/SalaryReport'
+import { generateSalaryReportWithHash } from '@/components/SalaryReport'
+import { PdfDocument, markdownToPdfLines, wrapPdfLines } from '@/components/PdfDocument'
 
 export default defineComponent({
   name: 'SalaryReportButton',
@@ -52,7 +53,7 @@ export default defineComponent({
       }
       this.busy = true
       try {
-        const { content, dataBlock } = await generateSalaryReportWithHash(
+        const { content } = await generateSalaryReportWithHash(
           {
             salaries: this.salaries,
             adjustedSalaries: this.adjustedSalaries,
@@ -63,23 +64,15 @@ export default defineComponent({
           },
           this.$t as (key: string, params?: Record<string, unknown>) => string
         )
-        const hash = await sha256Hex(dataBlock)
-        const report =
-          content +
-          '\n' +
-          '\n---\n\n' +
-          this.$t('salary.report.integrity.selfHashTitle') +
-          '\n\n' +
-          this.$t('salary.report.integrity.selfHash') +
-          ' `' +
-          hash +
-          '`\n'
-        const blob = new Blob([report], { type: 'text/markdown' })
+        const pdf = new PdfDocument()
+        pdf.addLines(wrapPdfLines(markdownToPdfLines(content)))
+        const bytes = pdf.finish()
+        const blob = new Blob([bytes], { type: 'application/pdf' })
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
         const date = new Date().toISOString().substring(0, 10)
-        link.download = 'ai-je-ete-augmente-' + date + '.md'
+        link.download = 'ai-je-ete-augmente-' + date + '.pdf'
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
