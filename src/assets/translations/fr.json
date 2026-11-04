@@ -149,7 +149,20 @@
         "fr": "Français 🇫🇷"
       }
     },
-    "saved": "Les paramètres ont été sauvegardé | Les paramètres ont été sauvegardé ({count})"
+    "saved": "Les paramètres ont été sauvegardé | Les paramètres ont été sauvegardé ({count})",
+    "indexPointValue": {
+      "helper": "Salaire calculé = indice saisi × valeur du point, exprimée dans l’unité du mode de salaire choisi",
+      "label": "Valeur d'un point"
+    },
+    "raiseMode": {
+      "helper": "Choisissez si chaque changement de salaire est saisi en valeur absolue, en pourcentage par rapport au dernier salaire, ou via un indice",
+      "label": "Mode de saisie des augmentations",
+      "options": {
+        "absolute": "Valeur absolue (salaire complet)",
+        "index-point": "Indice (indice × valeur du point)",
+        "percent": "Pourcentage par rapport au dernier salaire"
+      }
+    }
   },
   "global": {
     "salary": "{income}{currency}"
@@ -244,7 +257,11 @@
         "months": "Mois",
         "year": "Année"
       },
-      "error": "⚠️ salaire déjà renseigné sur le mois {date}, supprimez le d'abord",
+      "error": {
+        "noPointValue": "⚠️ valeur du point non configurée, renseignez-la dans la page Configurer",
+        "noPrevious": "⚠️ aucun salaire précédent : saisissez d’abord un salaire en mode absolu",
+        "duplicate": "⚠️ salaire déjà renseigné sur le mois {date}, supprimez le d'abord"
+      },
       "salary": {
         "gross": "annuel brut en {currency}",
         "label": "Montant du nouveau salaire",
@@ -253,7 +270,17 @@
         "year": "Année",
         "hourly": "taux horaire en {currency}"
       },
-      "title": "Ajouter un salaire"
+      "title": "Ajouter un salaire",
+      "raise": {
+        "index": {
+          "label": "Nouvel indice",
+          "placeholder": "ex. 512"
+        },
+        "percent": {
+          "label": "Augmentation (%) par rapport au dernier salaire",
+          "placeholder": "ex. 3.5"
+        }
+      }
     },
     "summary": {
       "change": {
@@ -296,7 +323,8 @@
       "unrecognized": "non reconnu",
       "duplicate": "salaire déjà renseigné en {date}",
       "confirm": "Importer {count} salaire(s)",
-      "summary": "Résumé : {date} — {income} {currency}"
+      "summary": "Résumé : {date} — {income} {currency}",
+      "error": "⚠️ erreur lors de l’analyse des fichiers"
     },
     "incomeMode": {
       "title": "Mode de calcul du salaire",
@@ -387,7 +415,32 @@
         "dataBlock": "### Bloc de données signé (JSON canonique)",
         "selfHashTitle": "### Comment vérifier ce rapport ?",
         "selfHash": "1. Recalculez l'empreinte SHA-256 du bloc JSON de la section « Intégrité des données ». 2. Comparez-la à l'empreinte indiquée dans cette même section. 3. Refaites les calculs avec les formules documentées : tout écart révèlerait une altération. Empreinte :"
-      }
+      },
+      "error": "⚠️ erreur lors de la génération du rapport"
+    },
+    "backup": {
+      "error": "⚠️ fichier illisible ou format non reconnu",
+      "exportCsv": "Exporter en CSV",
+      "exportJson": "Exporter en JSON",
+      "helper": "Sauvegardez vos salaires en JSON ou CSV, ou réimportez-les sur un autre appareil. Tout reste sur votre appareil ; les salaires déjà existants (même mois) sont ignorés.",
+      "importLabel": "Importer un fichier JSON ou CSV de salaires",
+      "imported": "Aucun salaire importé. | {count} salaire importé ({skipped} ignoré). | {count} salaires importés ({skipped} ignorés).",
+      "title": "Exporter / importer mes salaires"
+    },
+    "projection": {
+      "error": {
+        "past": "⚠️ la date cible doit être postérieure au dernier salaire ({date})"
+      },
+      "helper": "Les taux d’inflation inconnus après {lastKnown} sont extrapolés avec la moyenne des {count} derniers mois connus ({rate} %).",
+      "helperNoKnown": "Aucun taux d’inflation connu : la projection ne tient pas compte de l’inflation.",
+      "raise": {
+        "label": "Augmentation appliquée (%)"
+      },
+      "result": "En {date}, avec une augmentation de {raise} % : annoncé {income}{currency}, réel ajusté {adjusted}{currency}. Pas de changement de pouvoir d’achat. | En {date}, avec une augmentation de {raise} % : annoncé {income}{currency}, réel ajusté {adjusted}{currency}. Perte réelle de {change}. | En {date}, avec une augmentation de {raise} % : annoncé {income}{currency}, réel ajusté {adjusted}{currency}. Gain réel de {change}.",
+      "target": {
+        "label": "Date cible de la simulation"
+      },
+      "title": "Simuler une augmentation future"
     }
   }
 }

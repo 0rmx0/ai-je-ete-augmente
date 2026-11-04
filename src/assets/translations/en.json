@@ -147,7 +147,20 @@
         "fr": "Français 🇫🇷"
       }
     },
-    "saved": "Parameters have been saved | Parameters have been saved ({count})"
+    "saved": "Parameters have been saved | Parameters have been saved ({count})",
+    "indexPointValue": {
+      "helper": "Computed salary = entered index × point value, expressed in the unit of the selected income mode",
+      "label": "Value of one point"
+    },
+    "raiseMode": {
+      "helper": "Choose whether each salary change is entered as an absolute value, as a percentage of the last salary, or via an index",
+      "label": "Raise input mode",
+      "options": {
+        "absolute": "Absolute value (full salary)",
+        "index-point": "Index point (index × point value)",
+        "percent": "Percentage of the last salary"
+      }
+    }
   },
   "global": {
     "salary": "{income}{currency}"
@@ -242,7 +255,11 @@
         "months": "Month",
         "year": "Year"
       },
-      "error": "⚠️ salary for this date {date} already filled in, remove the existing first",
+      "error": {
+        "noPointValue": "⚠️ point value not configured, set it on the Configure page",
+        "noPrevious": "⚠️ no previous salary: add a salary in absolute mode first",
+        "duplicate": "⚠️ salary for this date {date} already filled in, remove the existing first"
+      },
       "salary": {
         "gross": "annual gross in {currency}",
         "label": "Amount of the new salary",
@@ -251,7 +268,17 @@
         "year": "Year",
         "hourly": "hourly rate in {currency}"
       },
-      "title": "Add a salary"
+      "title": "Add a salary",
+      "raise": {
+        "index": {
+          "label": "New index",
+          "placeholder": "e.g. 512"
+        },
+        "percent": {
+          "label": "Raise (%) relative to the last salary",
+          "placeholder": "e.g. 3.5"
+        }
+      }
     },
     "summary": {
       "change": {
@@ -294,7 +321,8 @@
       "unrecognized": "unrecognized",
       "duplicate": "salary already set for {date}",
       "confirm": "Import {count} salary entries",
-      "summary": "Summary: {date} — {income} {currency}"
+      "summary": "Summary: {date} — {income} {currency}",
+      "error": "⚠️ error while analyzing the files"
     },
     "incomeMode": {
       "title": "Salary calculation mode",
@@ -385,7 +413,32 @@
         "dataBlock": "### Signed data block (canonical JSON)",
         "selfHashTitle": "### How to verify this report?",
         "selfHash": "1. Recompute the SHA-256 fingerprint of the JSON block from the “Data integrity” section. 2. Compare it with the fingerprint given in that same section. 3. Redo the calculations with the documented formulas: any difference reveals an alteration. Fingerprint:"
-      }
+      },
+      "error": "⚠️ error while generating the report"
+    },
+    "backup": {
+      "error": "⚠️ unreadable file or unrecognized format",
+      "exportCsv": "Export as CSV",
+      "exportJson": "Export as JSON",
+      "helper": "Save your salaries as JSON or CSV, or re-import them on another device. Everything stays on your device; existing salaries (same month) are skipped.",
+      "importLabel": "Import a JSON or CSV salary file",
+      "imported": "No salary imported. | {count} salary imported ({skipped} skipped). | {count} salaries imported ({skipped} skipped).",
+      "title": "Export / import my salaries"
+    },
+    "projection": {
+      "error": {
+        "past": "⚠️ target date must be after the last salary ({date})"
+      },
+      "helper": "Unknown inflation rates after {lastKnown} are extrapolated with the average of the last {count} known months ({rate}%).",
+      "helperNoKnown": "No known inflation rate: the projection ignores inflation.",
+      "raise": {
+        "label": "Applied raise (%)"
+      },
+      "result": "On {date}, with a {raise}% raise: announced {income}{currency}, real purchasing power {adjusted}{currency}. No change in purchasing power. | On {date}, with a {raise}% raise: announced {income}{currency}, real purchasing power {adjusted}{currency}. Real loss of {change}. | On {date}, with a {raise}% raise: announced {income}{currency}, real purchasing power {adjusted}{currency}. Real gain of {change}.",
+      "target": {
+        "label": "Target date of the simulation"
+      },
+      "title": "Simulate a future raise"
     }
   }
 }

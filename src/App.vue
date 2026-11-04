@@ -1,7 +1,7 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import type { Configuration } from '@/components/SharedConfiguration'
-import { DefaultConfiguration, SharedConfiguration } from '@/components/SharedConfiguration'
+import { SharedConfiguration, loadConfigurationFromStorage } from '@/components/SharedConfiguration'
 
 export default {
   components: { RouterLink, RouterView },
@@ -10,24 +10,8 @@ export default {
       configuration: SharedConfiguration as Configuration
     }
   },
-  mounted() {
-    const retrievedConfiguration = localStorage.getItem('configuration')
-    if (retrievedConfiguration) {
-      const parsedConfiguration = JSON.parse(retrievedConfiguration)
-      this.configuration.country = parsedConfiguration.country ?? DefaultConfiguration.country
-      this.configuration.currency = parsedConfiguration.currency ?? DefaultConfiguration.currency
-      this.configuration.customInflation =
-        parsedConfiguration.customInflation ?? DefaultConfiguration.customInflation
-      this.configuration.imposition =
-        parsedConfiguration.imposition ?? DefaultConfiguration.imposition
-      this.configuration.incomeMode =
-        parsedConfiguration.incomeMode ?? DefaultConfiguration.incomeMode
-      this.configuration.monthlyHours =
-        parsedConfiguration.monthlyHours ?? DefaultConfiguration.monthlyHours
-      this.configuration.locale = parsedConfiguration.locale ?? DefaultConfiguration.locale
-      this.configuration.useCustomInflation =
-        parsedConfiguration.useCustomInflation ?? DefaultConfiguration.useCustomInflation
-    }
+  created() {
+    loadConfigurationFromStorage()
     this.$i18n.locale = this.configuration.locale
   },
   watch: {

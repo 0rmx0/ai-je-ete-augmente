@@ -23,7 +23,8 @@ export default defineComponent({
       configuration: SharedConfiguration as Configuration,
       selectedFiles: [] as Array<File>,
       importing: false as boolean,
-      results: [] as PayslipFileResult[]
+      results: [] as PayslipFileResult[],
+      errorMessage: '' as string
     }
   },
   computed: {
@@ -51,6 +52,7 @@ export default defineComponent({
       const input = event.target as HTMLInputElement
       this.selectedFiles = Array.from(input.files ?? [])
       this.results = []
+      this.errorMessage = ''
     },
     async importFiles(): Promise<void> {
       if (!this.canImport) {
@@ -64,6 +66,7 @@ export default defineComponent({
         })
       } catch (error) {
         console.error(error)
+        this.errorMessage = this.$t('salary.import.error')
       } finally {
         this.importing = false
       }
@@ -123,6 +126,13 @@ export default defineComponent({
         <i18n-t keypath="salary.import.analyze" />
       </button>
     </form>
+    <p
+      v-if="errorMessage !== ''"
+      role="alert"
+      class="mt-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
+    >
+      {{ errorMessage }}
+    </p>
     <div v-if="importing" class="mt-3 text-sm italic">
       <i18n-t keypath="salary.import.processing" :plural="selectedFiles.length">
         <template v-slot:count>

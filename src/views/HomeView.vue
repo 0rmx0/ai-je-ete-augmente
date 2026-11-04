@@ -11,14 +11,19 @@ import type { CountryInflationRates, InflationRates } from '@/components/Inflati
 import AdjustedSalariesSummary from '@/components/AdjustedSalariesSummary.vue'
 import IncomeModeSelect from '@/components/IncomeModeSelect.vue'
 import SalaryReportButton from '@/components/SalaryReportButton.vue'
+import SalaryBackup from '@/components/SalaryBackup.vue'
+import SalaryProjection from '@/components/SalaryProjection.vue'
 import type { Configuration } from '@/components/SharedConfiguration'
 import { SharedConfiguration } from '@/components/SharedConfiguration'
+import { loadJson, sanitizeSalaries } from '@/components/Storage'
 
 export default defineComponent({
   components: {
     AdjustedSalariesSummary,
     InflationChart,
     IncomeModeSelect,
+    SalaryBackup,
+    SalaryProjection,
     SalaryDisplay,
     SalaryReportButton,
     SalaryNew,
@@ -32,7 +37,7 @@ export default defineComponent({
     }
   },
   async created() {
-    this.inflationRates = await import(`../assets/inflations/${this.configuration.country}.json`)
+    await this.loadInflationRates()
   },
   computed: {
     nextKey(): number {
@@ -41,14 +46,13 @@ export default defineComponent({
       }
       return Math.max(...this.salaries.map((s: Salary): number => s.key.valueOf())) + 1
     },
+    activeInflationRates(): InflationRates {
+      return this.configuration.useCustomInflation && this.configuration.customInflation !== null
+        ? this.configuration.customInflation
+        : this.inflationRates[this.configuration.country] ?? {}
+    },
     adjustedSalaries(): AdjustedSalary[] {
-      return AdjustedSalaryCreateListUpToDate(
-        this.salaries,
-        this.configuration.useCustomInflation && this.configuration.customInflation !== null
-          ? this.configuration.customInflation
-          : this.inflationRates[this.configuration.country] ?? {},
-        new Date()
-      )
+      return AdjustedSalaryCreateListUpToDate(this.salaries, this.activeInflationRates, new Date())
     },
     lastSalaryAdjusted(): [Salary | null, AdjustedSalary | null] {
       if (this.salaries.length === 0) {
@@ -59,13 +63,18 @@ export default defineComponent({
 
       const lastAdjustedSalaries = AdjustedSalaryCreateListUpToDate(
         [lastSalary],
-        this.configuration.useCustomInflation && this.configuration.customInflation !== null
-          ? this.configuration.customInflation
-          : this.inflationRates[this.configuration.country] ?? {},
+        this.activeInflationRates,
         new Date()
       )
 
       return [lastSalary, lastAdjustedSalaries[lastAdjustedSalaries.length - 1]]
+    },
+    suggestedRaisePercent(): number {
+      const lastAdjusted = this.lastSalaryAdjusted[1]
+      if (lastAdjusted === null) {
+        return 0
+      }
+      return (lastAdjusted.cumulatedInflationMultiplier - 1) * 100
     },
     missingInflationRates(): [Array<string>, string | null] {
       if (this.salaries.length === 0) {
@@ -79,10 +88,7 @@ export default defineComponent({
       let month = new Date().getMonth() + 1
       let year = new Date().getFullYear()
 
-      const inflationRates: InflationRates =
-        this.configuration.useCustomInflation && this.configuration.customInflation !== null
-          ? this.configuration.customInflation
-          : this.inflationRates[this.configuration.country] ?? {}
+      const inflationRates: InflationRates = this.activeInflationRates
 
       const missingInflationRates: Array<string> = []
       while (year > toYear || month > toMonth) {
@@ -120,20 +126,29 @@ export default defineComponent({
       this.salaries.sort((s1: Salary, s2: Salary): number => (s1.date < s2.date ? -1 : 1))
     },
     addSalaries(newSalaries: Salary[]): void {
-      this.salaries.push(...newSalaries)
+      const existingDates = new Set(this.salaries.map((salary: Salary): string => salary.date))
+      for (const newSalary of newSalaries) {
+        if (!existingDates.has(newSalary.date)) {
+          existingDates.add(newSalary.date)
+          this.salaries.push(newSalary)
+        }
+      }
       this.salaries.sort((s1: Salary, s2: Salary): number => (s1.date < s2.date ? -1 : 1))
+    },
+    async loadInflationRates(): Promise<void> {
+      this.inflationRates = await import(`../assets/inflations/${this.configuration.country}.json`)
     },
     removeSalary(oldSalaryKey: number): void {
       this.salaries = this.salaries.filter((s: Salary): boolean => s.key !== oldSalaryKey)
     }
   },
   mounted() {
-    let retrievedSalaries = localStorage.getItem('salaries')
-    if (retrievedSalaries) {
-      this.salaries = JSON.parse(retrievedSalaries)
-    }
+    this.salaries = sanitizeSalaries(loadJson<unknown>('salaries', []))
   },
   watch: {
+    'configuration.country'(): void {
+      void this.loadInflationRates()
+    },
     salaries: {
       handler(newSalaries: Salary[]): void {
         localStorage.setItem('salaries', JSON.stringify(newSalaries))
@@ -179,15 +194,16 @@ export default defineComponent({
       <salary-report-button
         v-bind:salaries="salaries"
         v-bind:adjusted-salaries="adjustedSalaries"
-        v-bind:inflation-rates="
-          configuration.useCustomInflation && configuration.customInflation !== null
-            ? configuration.customInflation
-            : inflationRates[configuration.country] ?? {}
-        "
+        v-bind:inflation-rates="activeInflationRates"
         v-bind:missing-inflation-rates="missingInflationRates[0]"
         v-bind:last-known-inflation-rate="missingInflationRates[1]"
       />
       <salary-import
+        v-on:addSalaries="addSalaries"
+        v-bind:salaries="salaries"
+        v-bind:next-key="nextKey"
+      />
+      <salary-backup
         v-on:addSalaries="addSalaries"
         v-bind:salaries="salaries"
         v-bind:next-key="nextKey"
@@ -217,6 +233,12 @@ export default defineComponent({
           </i18n-t>
           <i18n-t v-if="missingInflationRates[1] === null" keypath="salary.warning.noKnown" />
         </p>
+        <salary-projection
+          v-if="salaries.length > 0"
+          :salaries="salaries"
+          :inflation-rates="activeInflationRates"
+          :suggested-raise-percent="suggestedRaisePercent"
+        />
         <adjusted-salaries-summary
           :adjusted-salaries="adjustedSalaries"
           :last-salary="lastSalaryAdjusted[0]"

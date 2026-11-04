@@ -74,7 +74,7 @@ export function AdjustedSalaryCreateFiller(
     salaryChangeAdjusted:
       (lastSalary.income / cumulatedInflationMultiplier / lastSalary.incomeAdjusted - 1) * 100,
     state:
-      lastSalary.incomeAdjusted >= lastSalary.income * cumulatedInflationMultiplier ? 'down' : 'up'
+      lastSalary.incomeAdjusted >= lastSalary.income / cumulatedInflationMultiplier ? 'down' : 'up'
   }
 }
 
