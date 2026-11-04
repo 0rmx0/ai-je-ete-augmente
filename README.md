@@ -5,9 +5,11 @@ A small single page app to show the difference between your usual salary raises,
 ## Planned feature
 
 * [x] Use data from eurostats to enable other country than france
-* [ ] Add new Raise calculation mode with % increae instead of flat value
-* [ ] Add indice point calculation mode
-* [ ] Add custom inflation import
+* [x] Add new Raise calculation mode with % increae instead of flat value
+* [x] Add indice point calculation mode
+* [x] Add custom inflation import
+* [x] Export / import salaries as JSON or CSV
+* [x] Simulate a future raise (what-if projection with extrapolated inflation)
 
 ## How to contribute?
 
@@ -38,5 +40,5 @@ npm run build
 ### Continuous Integration checks
 
 ```sh
-npm run format && npm run lint && npm run type-check
+npm run format && npm run lint && npm run type-check && npm run check:i18n && npm run test:unit -- --run
 ```

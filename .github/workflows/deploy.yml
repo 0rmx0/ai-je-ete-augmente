@@ -28,6 +28,7 @@ jobs:
       - run: npm run format-check
       - run: npm run lint
       - run: npm run type-check
+      - run: npm run check:i18n
       - run: npm run test:unit -- --run
       - run: npm run build
       - name: SPA 404 fallback

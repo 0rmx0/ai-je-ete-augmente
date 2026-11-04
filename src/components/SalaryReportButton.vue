@@ -38,7 +38,8 @@ export default defineComponent({
   data() {
     return {
       configuration: SharedConfiguration as Configuration,
-      busy: false as boolean
+      busy: false as boolean,
+      errorMessage: '' as string
     }
   },
   computed: {
@@ -52,6 +53,7 @@ export default defineComponent({
         return
       }
       this.busy = true
+      this.errorMessage = ''
       try {
         const { content } = await generateSalaryReportWithHash(
           {
@@ -77,6 +79,9 @@ export default defineComponent({
         link.click()
         document.body.removeChild(link)
         URL.revokeObjectURL(url)
+      } catch (error) {
+        console.error(error)
+        this.errorMessage = this.$t('salary.report.error')
       } finally {
         this.busy = false
       }
@@ -94,4 +99,11 @@ export default defineComponent({
   >
     <i18n-t keypath="salary.report.button" />
   </button>
+  <p
+    v-if="errorMessage !== ''"
+    role="alert"
+    class="m-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
+  >
+    {{ errorMessage }}
+  </p>
 </template>

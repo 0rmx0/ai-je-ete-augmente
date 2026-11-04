@@ -3,7 +3,7 @@
 #  This template allows you to validate your NodeJS code.
 #  The workflow allows running tests and code linting on the default branch.
 
-image: node:16
+image: node:20
 
 pipelines:
   default:
@@ -27,5 +27,19 @@ pipelines:
             script:
               - npm install
               - npm run type-check
+            caches:
+              - node
+        - step:
+            name: Translation keys check
+            script:
+              - npm install
+              - npm run check:i18n
+            caches:
+              - node
+        - step:
+            name: Unit tests
+            script:
+              - npm install
+              - npm run test:unit -- --run
             caches:
               - node

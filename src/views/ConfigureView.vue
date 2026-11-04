@@ -4,6 +4,9 @@ import type { Configuration } from '@/components/SharedConfiguration'
 import { SharedConfiguration, DefaultConfiguration } from '@/components/SharedConfiguration'
 import type { countryCode } from '@/components/CountryCodes'
 import { countryCodes } from '@/components/CountryCodes'
+import type { RaiseMode } from '@/components/RaiseMode'
+import { raiseModes } from '@/components/RaiseMode'
+import { isValidInflationRates } from '@/components/InflationRates'
 import IncomeModeSelect from '@/components/IncomeModeSelect.vue'
 
 export default defineComponent({
@@ -12,6 +15,7 @@ export default defineComponent({
     return {
       configuration: SharedConfiguration as Configuration,
       countryCodes: countryCodes as countryCode[],
+      raiseModes: raiseModes as RaiseMode[],
       customInflation:
         SharedConfiguration.customInflation !== null
           ? (JSON.stringify(SharedConfiguration.customInflation) as string)
@@ -29,30 +33,21 @@ export default defineComponent({
         )
       ) {
         localStorage.clear()
+        this.configuration.country = DefaultConfiguration.country
         this.configuration.currency = DefaultConfiguration.currency
+        this.configuration.customInflation = DefaultConfiguration.customInflation
         this.configuration.imposition = DefaultConfiguration.imposition
         this.configuration.incomeMode = DefaultConfiguration.incomeMode
+        this.configuration.indexPointValue = DefaultConfiguration.indexPointValue
+        this.configuration.locale = DefaultConfiguration.locale
         this.configuration.monthlyHours = DefaultConfiguration.monthlyHours
+        this.configuration.raiseMode = DefaultConfiguration.raiseMode
+        this.configuration.useCustomInflation = DefaultConfiguration.useCustomInflation
         alert('Reinitialisation effectuée !')
       }
     },
-    validateCustomInflation(jsonData: any): boolean {
-      if (typeof jsonData !== 'object') {
-        return false
-      }
-
-      const datePattern: RegExp = /(\d{4})-(\d{2})/
-
-      for (let property in jsonData) {
-        if (!datePattern.test(property)) {
-          return false
-        }
-        if (typeof jsonData[property] !== 'number') {
-          return false
-        }
-      }
-
-      return true
+    validateCustomInflation(jsonData: unknown): boolean {
+      return isValidInflationRates(jsonData)
     }
   },
   watch: {
@@ -188,6 +183,36 @@ export default defineComponent({
         </small>
 
         <income-mode-select class="mt-3" />
+      </form>
+      <form class="mb-5 pt-5" v-on:submit.prevent="">
+        <label for="raiseMode" class="block">
+          <i18n-t keypath="configure.raiseMode.label" />
+        </label>
+        <select id="raiseMode" v-model="configuration.raiseMode" class="block w-full">
+          <option v-for="raiseMode in raiseModes" v-bind:key="raiseMode" :value="raiseMode">
+            <i18n-t :keypath="'configure.raiseMode.options.' + raiseMode" />
+          </option>
+        </select>
+        <small class="block text-xs">
+          <i18n-t keypath="configure.raiseMode.helper" />
+        </small>
+        <div v-if="configuration.raiseMode === 'index-point'" class="mt-3">
+          <label for="indexPointValue" class="block">
+            <i18n-t keypath="configure.indexPointValue.label" />
+          </label>
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            required
+            v-model="configuration.indexPointValue"
+            id="indexPointValue"
+            class="block w-full"
+          />
+          <small class="block text-xs">
+            <i18n-t keypath="configure.indexPointValue.helper" />
+          </small>
+        </div>
       </form>
       <form class="mb-5 pt-5" v-on:submit.prevent="reset()">
         <button

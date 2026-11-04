@@ -68,6 +68,14 @@ export default defineComponent({
       return availableMonths
     },
     placeholderSalary(): string {
+      switch (this.configuration.raiseMode) {
+        case 'percent':
+          return this.$t('salary.new.raise.percent.placeholder')
+        case 'index-point':
+          return this.$t('salary.new.raise.index.placeholder')
+        default:
+          break
+      }
       switch (this.configuration.incomeMode) {
         case 'gross-annual':
           return this.$t('salary.new.salary.gross', { currency: this.configuration.currency })
@@ -78,6 +86,22 @@ export default defineComponent({
         default:
           return ''
       }
+    },
+    inputLabel(): string {
+      switch (this.configuration.raiseMode) {
+        case 'percent':
+          return this.$t('salary.new.raise.percent.label')
+        case 'index-point':
+          return this.$t('salary.new.raise.index.label')
+        default:
+          return this.$t('salary.new.salary.label')
+      }
+    },
+    inputStep(): string {
+      return this.configuration.raiseMode === 'percent' ? '0.1' : '0.01'
+    },
+    inputMin(): string {
+      return this.configuration.raiseMode === 'percent' ? '-100' : '0'
     }
   },
   methods: {
@@ -87,12 +111,27 @@ export default defineComponent({
       }
       const newDate = this.newDateYear + '-' + this.newDateMonth
       if (this.salaries.filter((salary: Salary): boolean => salary.date === newDate).length > 0) {
-        this.errorMessage = this.$t('salary.new.error', { date: newDate })
+        this.errorMessage = this.$t('salary.new.error.duplicate', { date: newDate })
         return
+      }
+      let income = this.newIncome
+      if (this.configuration.raiseMode === 'percent') {
+        const lastSalary = this.salaries.length > 0 ? this.salaries[this.salaries.length - 1] : null
+        if (lastSalary === null) {
+          this.errorMessage = this.$t('salary.new.error.noPrevious')
+          return
+        }
+        income = lastSalary.income * (1 + this.newIncome / 100)
+      } else if (this.configuration.raiseMode === 'index-point') {
+        if (!(this.configuration.indexPointValue > 0)) {
+          this.errorMessage = this.$t('salary.new.error.noPointValue')
+          return
+        }
+        income = this.newIncome * this.configuration.indexPointValue
       }
       this.$emit('addSalary', {
         date: newDate,
-        income: this.newIncome,
+        income: income,
         key: this.newKey
       })
       this.newDateYear = ''
@@ -160,12 +199,12 @@ export default defineComponent({
       </select>
     </div>
     <label for="newDate" class="mt-3 block">
-      <i18n-t keypath="salary.new.salary.label" />
+      {{ inputLabel }}
     </label>
     <input
       type="number"
-      min="0"
-      step="0.01"
+      :min="inputMin"
+      :step="inputStep"
       required
       :placeholder="placeholderSalary"
       v-model="newIncome"
