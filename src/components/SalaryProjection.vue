@@ -113,50 +113,56 @@ export default defineComponent({
 </script>
 
 <template>
-  <details class="mx-5 mb-3 rounded border border-slate-300 p-3">
-    <summary class="cursor-pointer text-sm text-slate-800">
+  <details class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+    <summary
+      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+    >
       <i18n-t keypath="salary.projection.title" />
     </summary>
-    <form class="mt-3 text-xs" v-on:submit.prevent="">
-      <label for="projectionYear" class="mt-3 block">
-        <i18n-t keypath="salary.projection.target.label" />
-      </label>
+    <form class="mt-3 flex flex-col gap-3" v-on:submit.prevent="">
       <div>
-        <select required v-model="targetYear" id="projectionYear" class="inline-block w-1/2">
-          <option value="" selected disabled>
-            <i18n-t keypath="salary.new.date.year" />
-          </option>
-          <option v-for="year in availableYears" v-bind:key="year" :value="year">
-            {{ year }}
-          </option>
-        </select>
-        <select required v-model="targetMonth" id="projectionMonth" class="inline-block w-1/2">
-          <option value="" selected disabled>
-            <i18n-t keypath="salary.new.date.months" />
-          </option>
-          <option v-for="month in availableMonths" v-bind:key="month" :value="month">
-            {{ month }}
-          </option>
-        </select>
+        <label for="projectionYear" class="label-text">
+          <i18n-t keypath="salary.projection.target.label" />
+        </label>
+        <div class="flex gap-3">
+          <select required v-model="targetYear" id="projectionYear" class="input-field w-1/2">
+            <option value="" selected disabled>
+              <i18n-t keypath="salary.new.date.year" />
+            </option>
+            <option v-for="year in availableYears" v-bind:key="year" :value="year">
+              {{ year }}
+            </option>
+          </select>
+          <select required v-model="targetMonth" id="projectionMonth" class="input-field w-1/2">
+            <option value="" selected disabled>
+              <i18n-t keypath="salary.new.date.months" />
+            </option>
+            <option v-for="month in availableMonths" v-bind:key="month" :value="month">
+              {{ month }}
+            </option>
+          </select>
+        </div>
       </div>
-      <label for="projectionRaise" class="mt-3 block">
-        <i18n-t keypath="salary.projection.raise.label" />
-      </label>
-      <input
-        type="number"
-        step="0.1"
-        min="-100"
-        required
-        v-model="raisePercent"
-        id="projectionRaise"
-        class="block w-full"
-      />
+      <div>
+        <label for="projectionRaise" class="label-text">
+          <i18n-t keypath="salary.projection.raise.label" />
+        </label>
+        <input
+          type="number"
+          step="0.1"
+          min="-100"
+          required
+          v-model="raisePercent"
+          id="projectionRaise"
+          class="input-field"
+        />
+      </div>
     </form>
-    <p v-if="projectionError !== ''" role="alert" class="mt-3 text-xs text-orange-700">
+    <p v-if="projectionError !== ''" role="alert" class="mt-3 text-sm text-orange-700">
       {{ projectionError }}
     </p>
-    <div v-if="projection !== null" class="mt-3 text-sm">
-      <p class="p-1">
+    <div v-if="projection !== null" class="mt-3 rounded-lg bg-white p-3 text-sm shadow-card">
+      <p>
         <i18n-t keypath="salary.projection.result" :plural="projection.salaryChangeAdjusted">
           <template v-slot:date>{{ targetDate }}</template>
           <template v-slot:raise>{{ raisePercent }}</template>
@@ -169,15 +175,15 @@ export default defineComponent({
           </template>
           <template v-slot:change>
             <span
-              class="font-bold"
-              :class="projection.salaryChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-500'"
+              class="font-semibold"
+              :class="projection.salaryChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
             >
               <i18n-n :value="projection.salaryChangeAdjusted / 100" format="result" />
             </span>
           </template>
         </i18n-t>
       </p>
-      <p class="p-1 text-xs italic text-slate-500">{{ projectionHelper }}</p>
+      <p class="mt-1 text-xs italic text-ink-muted">{{ projectionHelper }}</p>
     </div>
   </details>
 </template>

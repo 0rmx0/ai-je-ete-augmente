@@ -98,15 +98,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <details class="mb-5">
-    <summary class="cursor-pointer text-slate-800">
+  <details class="group/details">
+    <summary
+      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+    >
       <i18n-t keypath="salary.import.title" />
     </summary>
-    <blockquote class="mt-3 rounded border border-slate-300 p-3 text-sm text-slate-500">
+    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted">
       <i18n-t keypath="salary.import.privacy" />
-    </blockquote>
+    </p>
     <form class="mt-3" v-on:submit.prevent="">
-      <label for="payslipFiles" class="mb-1 block">
+      <label for="payslipFiles" class="label-text">
         <i18n-t keypath="salary.import.label" />
       </label>
       <input
@@ -114,12 +116,12 @@ export default defineComponent({
         type="file"
         multiple
         accept=".pdf,.zip,application/pdf,application/zip"
-        class="block w-full text-sm"
+        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600 hover:file:bg-brand-100"
         v-on:change="onFileChange"
       />
       <button
         type="button"
-        class="mt-3 rounded bg-red-500 px-4 py-2 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+        class="btn-primary mt-3"
         v-bind:disabled="!canImport"
         v-on:click="importFiles"
       >
@@ -129,11 +131,11 @@ export default defineComponent({
     <p
       v-if="errorMessage !== ''"
       role="alert"
-      class="mt-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
+      class="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
     >
       {{ errorMessage }}
     </p>
-    <div v-if="importing" class="mt-3 text-sm italic">
+    <div v-if="importing" class="mt-3 text-sm italic text-ink-muted">
       <i18n-t keypath="salary.import.processing" :plural="selectedFiles.length">
         <template v-slot:count>
           {{ selectedFiles.length }}
@@ -142,14 +144,14 @@ export default defineComponent({
     </div>
     <div v-if="results.length > 0" class="mt-3">
       <ul
-        class="mb-3 max-h-64 divide-y divide-dashed overflow-y-auto rounded border border-slate-300 text-sm"
+        class="mb-3 max-h-64 divide-y divide-dashed divide-slate-100 overflow-y-auto rounded-lg border border-slate-200 text-sm"
       >
         <li
           v-for="(result, index) in parsedResults"
           v-bind:key="index"
-          class="flex flex-row justify-between px-2 py-1"
+          class="flex flex-row justify-between px-3 py-2"
         >
-          <span class="mr-2 truncate">{{ result.fileName }}</span>
+          <span class="mr-2 truncate text-ink-secondary">{{ result.fileName }}</span>
           <span v-if="result.date === null || result.income === null" class="text-red-600">
             <i18n-t keypath="salary.import.unrecognized" />
           </span>
@@ -158,7 +160,7 @@ export default defineComponent({
               <template v-slot:date>{{ result.date }}</template>
             </i18n-t>
           </span>
-          <span v-else class="whitespace-nowrap">
+          <span v-else class="whitespace-nowrap text-ink-primary">
             <i18n-t keypath="salary.import.summary">
               <template v-slot:date>{{ result.date }}</template>
               <template v-slot:income>{{ result.income }}</template>
@@ -169,7 +171,7 @@ export default defineComponent({
       </ul>
       <button
         type="button"
-        class="rounded bg-red-500 px-4 py-2 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+        class="btn-primary"
         v-bind:disabled="validResults.length === 0"
         v-on:click="confirmImport"
       >

@@ -91,29 +91,36 @@ export default defineComponent({
 </script>
 
 <template>
-  <main class="mx-auto max-w-screen-lg p-5">
-    <h2 class="my-5 text-lg text-slate-800">
+  <main class="mx-auto w-full max-w-3xl flex-1 px-6 py-6 lg:px-8">
+    <h2 class="section-title mb-6">
       <i18n-t keypath="configure.header" />
     </h2>
-    <blockquote
+
+    <!-- Notification de sauvegarde -->
+    <div
       v-if="saved > 0"
-      class="mb-5 rounded border border-green-800 p-5 text-sm text-green-800"
+      class="mb-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800"
     >
       <i18n-t keypath="configure.saved" :plural="saved">
         <template v-slot:count>
           {{ saved }}
         </template>
       </i18n-t>
-    </blockquote>
-    <blockquote v-else class="mb-5 rounded border p-5 text-sm text-slate-500">
+    </div>
+    <div
+      v-else
+      class="mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-ink-muted"
+    >
       <i18n-t keypath="configure.autosave" />
-    </blockquote>
-    <div class="divide-y-2 divide-dashed">
-      <form class="mb-5 pt-5" v-on:submit.prevent="">
-        <label for="language" class="block">
+    </div>
+
+    <div class="flex flex-col gap-5">
+      <!-- Langue -->
+      <div class="card">
+        <label for="language" class="label-text">
           <i18n-t keypath="configure.language.label" />
         </label>
-        <select id="language" v-model="configuration.locale" class="block w-full">
+        <select id="language" v-model="configuration.locale" class="input-field">
           <option value="fr">
             <i18n-t keypath="configure.language.options.fr" />
           </option>
@@ -121,83 +128,99 @@ export default defineComponent({
             <i18n-t keypath="configure.language.options.en" />
           </option>
         </select>
-      </form>
-      <form class="mb-5 pt-5" v-on:submit.prevent="">
-        <input
-          type="checkbox"
-          v-model="configuration.useCustomInflation"
-          id="useCustomInflation"
-          class="peer/custom-inflation mb-3"
-        />
-        <label
-          for="useCustomInflation"
-          class="mb-3 block text-slate-500 peer-checked/custom-inflation:text-black md:mb-0 md:ml-3 md:inline"
-        >
-          <i18n-t keypath="configure.custom.label" />
-        </label>
-        <label for="country" class="block peer-checked/custom-inflation:hidden md:justify-between">
-          <i18n-t keypath="configure.country.label" />
-        </label>
-        <select
-          id="country"
-          v-model="configuration.country"
-          class="block w-full peer-checked/custom-inflation:hidden"
-        >
-          <option
-            v-for="(countryCode, index) in countryCodes"
-            v-bind:key="index"
-            :value="countryCode"
-          >
-            <i18n-t :keypath="'configure.country.options.' + countryCode" />
-          </option>
-        </select>
-        <textarea
-          v-model="customInflation"
-          class="hidden w-full peer-checked/custom-inflation:block"
-          :placeholder="$t('configure.custom.placeholder')"
-        >
-        </textarea>
-        <blockquote class="m-1 hidden text-xs peer-checked/custom-inflation:block">
-          <i18n-t keypath="configure.custom.helper" />
-        </blockquote>
-        <div
-          v-if="pendingCustomInflation"
-          class="m-1 hidden text-xs text-orange-800 peer-checked/custom-inflation:block"
-        >
-          <i18n-t keypath="configure.custom.error" />
-        </div>
-      </form>
-      <form class="mb-5 pt-5" v-on:submit.prevent="">
-        <label for="configCurrency" class="block">
-          <i18n-t keypath="configure.currency.label" />
-        </label>
-        <input
-          type="text"
-          required
-          v-model="configuration.currency"
-          id="configCurrency"
-          class="block md:inline"
-        />
-        <small class="block text-xs md:ml-3 md:inline-block">
-          <i18n-t keypath="configure.currency.helper" />
-        </small>
+      </div>
 
-        <income-mode-select class="mt-3" />
-      </form>
-      <form class="mb-5 pt-5" v-on:submit.prevent="">
-        <label for="raiseMode" class="block">
+      <!-- Pays / inflation personnalisée -->
+      <div class="card">
+        <div class="flex items-center gap-3">
+          <input
+            type="checkbox"
+            v-model="configuration.useCustomInflation"
+            id="useCustomInflation"
+            class="peer/custom-inflation h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+          />
+          <label
+            for="useCustomInflation"
+            class="text-sm font-medium text-ink-secondary peer-checked/custom-inflation:text-ink-primary"
+          >
+            <i18n-t keypath="configure.custom.label" />
+          </label>
+        </div>
+
+        <div class="mt-4 peer-checked/custom-inflation:hidden">
+          <label for="country" class="label-text">
+            <i18n-t keypath="configure.country.label" />
+          </label>
+          <select id="country" v-model="configuration.country" class="input-field">
+            <option
+              v-for="(countryCode, index) in countryCodes"
+              v-bind:key="index"
+              :value="countryCode"
+            >
+              <i18n-t :keypath="'configure.country.options.' + countryCode" />
+            </option>
+          </select>
+        </div>
+
+        <div class="hidden peer-checked/custom-inflation:block">
+          <label for="customInflation" class="label-text">
+            <i18n-t keypath="configure.custom.label" />
+          </label>
+          <textarea
+            id="customInflation"
+            v-model="customInflation"
+            rows="5"
+            class="input-field font-mono text-xs"
+            :placeholder="$t('configure.custom.placeholder')"
+          ></textarea>
+          <p class="mt-1.5 text-xs text-ink-muted">
+            <i18n-t keypath="configure.custom.helper" />
+          </p>
+          <p v-if="pendingCustomInflation" class="mt-1.5 text-xs text-orange-700">
+            <i18n-t keypath="configure.custom.error" />
+          </p>
+        </div>
+      </div>
+
+      <!-- Devise + mode de revenu -->
+      <div class="card">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label for="configCurrency" class="label-text">
+              <i18n-t keypath="configure.currency.label" />
+            </label>
+            <input
+              type="text"
+              required
+              v-model="configuration.currency"
+              id="configCurrency"
+              class="input-field"
+            />
+            <p class="mt-1.5 text-xs text-ink-muted">
+              <i18n-t keypath="configure.currency.helper" />
+            </p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <income-mode-select />
+        </div>
+      </div>
+
+      <!-- Mode de saisie des augmentations -->
+      <div class="card">
+        <label for="raiseMode" class="label-text">
           <i18n-t keypath="configure.raiseMode.label" />
         </label>
-        <select id="raiseMode" v-model="configuration.raiseMode" class="block w-full">
+        <select id="raiseMode" v-model="configuration.raiseMode" class="input-field">
           <option v-for="raiseMode in raiseModes" v-bind:key="raiseMode" :value="raiseMode">
             <i18n-t :keypath="'configure.raiseMode.options.' + raiseMode" />
           </option>
         </select>
-        <small class="block text-xs">
+        <p class="mt-1.5 text-xs text-ink-muted">
           <i18n-t keypath="configure.raiseMode.helper" />
-        </small>
-        <div v-if="configuration.raiseMode === 'index-point'" class="mt-3">
-          <label for="indexPointValue" class="block">
+        </p>
+        <div v-if="configuration.raiseMode === 'index-point'" class="mt-4">
+          <label for="indexPointValue" class="label-text">
             <i18n-t keypath="configure.indexPointValue.label" />
           </label>
           <input
@@ -207,21 +230,20 @@ export default defineComponent({
             required
             v-model="configuration.indexPointValue"
             id="indexPointValue"
-            class="block w-full"
+            class="input-field"
           />
-          <small class="block text-xs">
+          <p class="mt-1.5 text-xs text-ink-muted">
             <i18n-t keypath="configure.indexPointValue.helper" />
-          </small>
+          </p>
         </div>
-      </form>
-      <form class="mb-5 pt-5" v-on:submit.prevent="reset()">
-        <button
-          type="submit"
-          class="mt-3 rounded border border-orange-500 p-2 hover:bg-orange-500 hover:text-white"
-        >
+      </div>
+
+      <!-- Reset -->
+      <div class="card border-red-200">
+        <button type="button" v-on:click.prevent="reset()" class="btn-danger">
           <i18n-t keypath="configure.data.reset" />
         </button>
-      </form>
+      </div>
     </div>
   </main>
 </template>

@@ -161,60 +161,61 @@ export default defineComponent({
   <p
     v-if="errorMessage !== ''"
     role="alert"
-    class="mt-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
+    class="rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
   >
     {{ errorMessage }}
   </p>
-  <h2 class="my-5 text-lg text-slate-800">
+  <h2 class="section-title">
     <i18n-t keypath="salary.new.title" />
   </h2>
-  <form v-on:submit.prevent="addSalary()" class="relative min-w-0 text-xs">
-    <label for="newDateYear" class="mt-3 block">
-      <i18n-t keypath="salary.new.date.label" />
-    </label>
+  <form v-on:submit.prevent="addSalary()" class="flex flex-col gap-3">
     <div>
-      <select required v-model="newDateYear" id="newDateYear" class="inline-block w-1/2">
-        <option value="" selected disabled>
-          <i18n-t keypath="salary.new.date.year" />
-        </option>
-        <option
-          v-for="(availableYear, index) in availableYears"
-          v-bind:key="index"
-          :value="availableYear"
-        >
-          {{ availableYear }}
-        </option>
-      </select>
-      <select required v-model="newDateMonth" id="newDateMonth" class="inline-block w-1/2">
-        <option value="" selected disabled>
-          <i18n-t keypath="salary.new.date.months" />
-        </option>
-        <option
-          v-for="(availableMonth, index) in availableMonths"
-          v-bind:key="index"
-          :value="availableMonth"
-        >
-          {{ availableMonth }}
-        </option>
-      </select>
+      <label for="newDateYear" class="label-text">
+        <i18n-t keypath="salary.new.date.label" />
+      </label>
+      <div class="flex gap-3">
+        <select required v-model="newDateYear" id="newDateYear" class="input-field w-1/2">
+          <option value="" selected disabled>
+            <i18n-t keypath="salary.new.date.year" />
+          </option>
+          <option
+            v-for="(availableYear, index) in availableYears"
+            v-bind:key="index"
+            :value="availableYear"
+          >
+            {{ availableYear }}
+          </option>
+        </select>
+        <select required v-model="newDateMonth" id="newDateMonth" class="input-field w-1/2">
+          <option value="" selected disabled>
+            <i18n-t keypath="salary.new.date.months" />
+          </option>
+          <option
+            v-for="(availableMonth, index) in availableMonths"
+            v-bind:key="index"
+            :value="availableMonth"
+          >
+            {{ availableMonth }}
+          </option>
+        </select>
+      </div>
     </div>
-    <label for="newDate" class="mt-3 block">
-      {{ inputLabel }}
-    </label>
-    <input
-      type="number"
-      :min="inputMin"
-      :step="inputStep"
-      required
-      :placeholder="placeholderSalary"
-      v-model="newIncome"
-      id="newIncome"
-      class="block w-full"
-    />
-    <button
-      type="submit"
-      class="mt-3 rounded border border-green-700 bg-green-700 p-2 text-white hover:border-green-800 hover:bg-green-800"
-    >
+    <div>
+      <label for="newIncome" class="label-text">
+        {{ inputLabel }}
+      </label>
+      <input
+        type="number"
+        :min="inputMin"
+        :step="inputStep"
+        required
+        :placeholder="placeholderSalary"
+        v-model="newIncome"
+        id="newIncome"
+        class="input-field"
+      />
+    </div>
+    <button type="submit" class="btn-primary w-full">
       <i18n-t keypath="salary.new.add" />
     </button>
   </form>

@@ -57,20 +57,22 @@ export default defineComponent({
           {
             label: this.$t('salary.chart.datasets.1.label'),
             data: incomes,
-            backgroundColor: 'rgba(37, 99, 235, 0.1)',
-            borderColor: 'rgb(37, 99, 235)',
-            borderWidth: 2,
-            pointStyle: false
+            backgroundColor: 'rgba(59, 130, 246, 0.08)',
+            borderColor: 'rgb(59, 130, 246)',
+            borderWidth: 2.5,
+            pointStyle: false,
+            tension: 0.3
           },
           {
             label: this.$t('salary.chart.datasets.2.label'),
             data: incomesAdjusted,
             cubicInterpolationMode: 'monotone',
             fill: '-1',
-            backgroundColor: 'rgba(239, 68, 68, 0.12)',
+            backgroundColor: 'rgba(239, 68, 68, 0.08)',
             borderColor: 'rgb(239, 68, 68)',
-            borderWidth: 2,
-            pointStyle: false
+            borderWidth: 2.5,
+            pointStyle: false,
+            tension: 0.3
           }
         ]
       } as any
@@ -83,6 +85,7 @@ export default defineComponent({
 
       return {
         responsive: true,
+        maintainAspectRatio: true,
         interaction: {
           intersect: false,
           mode: 'index'
@@ -91,27 +94,41 @@ export default defineComponent({
           x: {
             title: {
               display: true,
-              text: this.$t('salary.chart.x.title')
+              text: this.$t('salary.chart.x.title'),
+              color: '#64748B',
+              font: { size: 12, family: 'Inter' }
             },
             grid: {
               display: false
             },
             ticks: {
+              color: '#94A3B8',
+              font: { size: 11, family: 'Inter' },
               callback: function (val: number, index: number) {
                 return ticks[index]
               }
+            },
+            border: {
+              color: '#E2E8F0'
             }
           },
           y: {
             title: {
               display: true,
-              text: this.$t('salary.chart.y.title', { currency: this.configuration.currency })
+              text: this.$t('salary.chart.y.title', { currency: this.configuration.currency }),
+              color: '#64748B',
+              font: { size: 12, family: 'Inter' }
             },
             position: 'right',
             grid: {
-              color: 'rgba(100, 116, 139, 0.15)'
+              color: 'rgba(226, 232, 240, 0.6)'
+            },
+            border: {
+              display: false
             },
             ticks: {
+              color: '#94A3B8',
+              font: { size: 11, family: 'Inter' },
               callback: (value: number): string => {
                 return new Intl.NumberFormat(this.configuration.locale, {
                   notation: 'compact',
@@ -124,6 +141,26 @@ export default defineComponent({
         plugins: {
           filler: {
             propagate: false
+          },
+          legend: {
+            labels: {
+              color: '#64748B',
+              font: { size: 12, family: 'Inter' },
+              usePointStyle: true,
+              pointStyle: 'line',
+              padding: 16
+            }
+          },
+          tooltip: {
+            backgroundColor: '#FFFFFF',
+            titleColor: '#0F172A',
+            bodyColor: '#334155',
+            borderColor: '#E2E8F0',
+            borderWidth: 1,
+            padding: 12,
+            cornerRadius: 8,
+            titleFont: { family: 'Inter', size: 13, weight: 'bold' },
+            bodyFont: { family: 'Inter', size: 12 }
           }
         }
       } as any

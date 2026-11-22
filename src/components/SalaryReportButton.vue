@@ -95,14 +95,14 @@ export default defineComponent({
     type="button"
     v-bind:disabled="!canGenerate"
     v-on:click="downloadReport"
-    class="m-3 rounded border border-red-500 p-2 text-red-500 hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+    class="btn-danger w-full"
   >
     <i18n-t keypath="salary.report.button" />
   </button>
   <p
     v-if="errorMessage !== ''"
     role="alert"
-    class="m-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
+    class="rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
   >
     {{ errorMessage }}
   </p>

@@ -201,7 +201,8 @@
     "configure": "⚙️ Configurer",
     "home": "🧮 Calculer",
     "how": "🔧 Comment ça marche ?",
-    "title": "💸 Ai-je été augmenté ?"
+    "title": "💸 Ai-je été augmenté ?",
+    "logoSymbol": "€"
   },
   "salary": {
     "chart": {
@@ -218,7 +219,8 @@
       },
       "y": {
         "title": "Pouvoir d'achat en {currency}"
-      }
+      },
+      "title": "Évolution du pouvoir d'achat"
     },
     "history": {
       "change": {
@@ -307,6 +309,14 @@
         "more": " un peu plus de {number} ans",
         "nearly": " presque {number} ans",
         "years": "{number} ans"
+      },
+      "title": "Résumé",
+      "metric": {
+        "announced": "Évolution annoncée",
+        "real": "Évolution réelle (inflation)",
+        "minRaise": "Augmentation minimale requise",
+        "period": "sur {period} mois",
+        "newSalary": "soit {income}{currency}"
       }
     },
     "warning": {
