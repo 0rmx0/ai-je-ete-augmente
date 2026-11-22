@@ -126,141 +126,204 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex flex-col items-center p-5">
-    <template v-if="numberOfSalaryChanges > 1">
-      <p class="p-3 text-lg">
-        <i18n-t keypath="salary.summary.change.multi.overall">
-          <template v-slot:baseIncome>
-            <span class="font-semibold">
-              <i18n-t keypath="global.salary">
-                <template v-slot:income>
-                  <i18n-n :value="incomeReference" format="salary" />
-                </template>
-                <template v-slot:currency>
-                  {{ configuration.currency }}
-                </template>
-              </i18n-t>
-            </span>
-          </template>
-          <template v-slot:finalIncome>
-            <span class="line-through">
-              <i18n-n :value="incomeFinal" format="salary" />{{ configuration.currency }}
-            </span>
-          </template>
-          <template v-slot:finalIncomeAdjusted>
-            <span class="font-semibold">
-              <i18n-n :value="incomeFinalAdjusted" format="salary" />{{ configuration.currency }}
-            </span>
-          </template>
-          <template v-slot:period>{{ adjustedSalaries.length }}</template>
-        </i18n-t>
-      </p>
-      <p class="p-3 text-center text-lg">
-        <i18n-t keypath="salary.summary.change.multi.announced" :plural="overallChange">
-          <template v-slot:change>
-            <span class="text-red-500">
-              <i18n-n :value="overallChange / 100" format="result" />
-            </span>
-          </template>
-          <template v-slot:numberOfChanges>
-            {{ numberOfSalaryChanges - 1 }}
-          </template>
-          <template v-slot:period>
-            {{ timeElapsed }}
-          </template>
-        </i18n-t>
-      </p>
-      <p class="p-3 text-center text-lg">
-        <i18n-t keypath="salary.summary.change.multi.adjusted" :plural="overallChangeAdjusted">
-          <template v-slot:changeAdjusted>
-            <span
-              class="font-bold"
-              :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-500'"
-            >
-              <i18n-n :value="overallChangeAdjusted / 100" format="result" />
-            </span>
-          </template>
-        </i18n-t>
-      </p>
-    </template>
-    <template v-else-if="numberOfSalaryChanges === 1 && adjustedSalaries.length > 1">
-      <p class="p-3 text-lg">
-        <i18n-t keypath="salary.summary.change.one" :plural="overallChangeAdjusted">
-          <template v-slot:changeAdjusted>
-            <span
-              class="font-bold"
-              :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-500'"
-            >
-              <i18n-n :value="overallChangeAdjusted / 100" format="result" />
-            </span>
-          </template>
-          <template v-slot:period>
-            {{ timeElapsed }}
-          </template>
-        </i18n-t>
-      </p>
-      <p class="p-3 text-sm">
-        <i18n-t keypath="salary.summary.change.helper" />
-      </p>
-    </template>
-    <template v-else-if="numberOfSalaryChanges === 0">
-      <p class="p-3 text-sm">
-        <i18n-t keypath="salary.summary.change.none" />
-      </p>
-    </template>
-    <template v-if="lastSalary !== null">
-      <p class="p-3 text-lg">
-        <span class="font-bold text-red-500">
-          <i18n-t keypath="salary.summary.next.title" />
-        </span>
-        <i18n-t keypath="salary.summary.next.requirement" :plural="minimalRaiseRequired">
-          <template v-slot:disclaimer>
-            <span class="italic">
-              <i18n-t v-if="numberOfSalaryChanges > 1" keypath="salary.summary.next.disclaimer">
-                <template v-slot:date>
-                  {{ lastSalary.date }}
-                </template>
-              </i18n-t>
-            </span>
-          </template>
-          <template v-slot:minimalRaiseRequired>
-            <span class="font-bold text-red-500">
-              <i18n-n :value="minimalRaiseRequired" format="raise" />
-            </span>
-          </template>
-          <template v-slot:newSalary>
-            <span class="font-bold">
-              <i18n-t keypath="salary.summary.next.newSalary">
-                <template v-slot:income>
-                  <i18n-n :value="minimalNewSalary" format="salary" />
-                </template>
-                <template v-slot:currency>
-                  {{ configuration.currency }}
-                </template>
-                <template v-slot:recurrence>
-                  {{ salaryRecurrence }}
-                </template>
-              </i18n-t>
-            </span>
-          </template>
-        </i18n-t>
-      </p>
-    </template>
-    <p class="self-end p-5 text-xs underline">
+  <div class="card">
+    <h2 class="section-title mb-4">
+      <i18n-t keypath="salary.summary.title" />
+    </h2>
+
+    <!-- Métriques en grille -->
+    <div v-if="numberOfSalaryChanges > 1" class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <!-- Évolution annoncée -->
+      <div class="rounded-xl bg-slate-50 p-4">
+        <p class="text-sm font-medium text-ink-muted">
+          <i18n-t keypath="salary.summary.metric.announced" />
+        </p>
+        <p
+          class="mt-1 text-2xl font-bold"
+          :class="overallChange >= 0 ? 'text-green-600' : 'text-red-600'"
+        >
+          <i18n-n :value="overallChange / 100" format="result" />
+        </p>
+        <p class="mt-1 text-xs text-ink-faint">
+          <i18n-t keypath="salary.summary.metric.period" :plural="adjustedSalaries.length">
+            <template v-slot:period>{{ adjustedSalaries.length }}</template>
+          </i18n-t>
+        </p>
+      </div>
+
+      <!-- Évolution réelle -->
+      <div class="rounded-xl p-4" :class="overallChangeAdjusted >= 0 ? 'bg-green-50' : 'bg-red-50'">
+        <p class="text-sm font-medium text-ink-muted">
+          <i18n-t keypath="salary.summary.metric.real" />
+        </p>
+        <p
+          class="mt-1 text-2xl font-bold"
+          :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+        >
+          <i18n-n :value="overallChangeAdjusted / 100" format="result" />
+        </p>
+        <p class="mt-1 text-xs text-ink-faint">{{ timeElapsed }}</p>
+      </div>
+
+      <!-- Augmentation minimale requise -->
+      <div v-if="lastSalary !== null" class="rounded-xl bg-brand-50 p-4">
+        <p class="text-sm font-medium text-ink-muted">
+          <i18n-t keypath="salary.summary.metric.minRaise" />
+        </p>
+        <p class="mt-1 text-2xl font-bold text-brand-600">
+          <i18n-n :value="minimalRaiseRequired" format="raise" />
+        </p>
+        <p class="mt-1 text-xs text-ink-faint">
+          <i18n-t keypath="salary.summary.metric.newSalary">
+            <template v-slot:income>
+              <i18n-n :value="minimalNewSalary" format="salary" />
+            </template>
+            <template v-slot:currency>{{ configuration.currency }}</template>
+          </i18n-t>
+        </p>
+      </div>
+    </div>
+
+    <!-- Texte détaillé -->
+    <div class="mt-4 space-y-2 text-sm leading-relaxed text-ink-secondary">
+      <template v-if="numberOfSalaryChanges > 1">
+        <p>
+          <i18n-t keypath="salary.summary.change.multi.overall">
+            <template v-slot:baseIncome>
+              <span class="font-semibold text-ink-primary">
+                <i18n-t keypath="global.salary">
+                  <template v-slot:income>
+                    <i18n-n :value="incomeReference" format="salary" />
+                  </template>
+                  <template v-slot:currency>
+                    {{ configuration.currency }}
+                  </template>
+                </i18n-t>
+              </span>
+            </template>
+            <template v-slot:finalIncome>
+              <span class="text-ink-faint line-through">
+                <i18n-n :value="incomeFinal" format="salary" />{{ configuration.currency }}
+              </span>
+            </template>
+            <template v-slot:finalIncomeAdjusted>
+              <span class="font-semibold text-ink-primary">
+                <i18n-n :value="incomeFinalAdjusted" format="salary" />{{ configuration.currency }}
+              </span>
+            </template>
+            <template v-slot:period>{{ adjustedSalaries.length }}</template>
+          </i18n-t>
+        </p>
+        <p>
+          <i18n-t keypath="salary.summary.change.multi.announced" :plural="overallChange">
+            <template v-slot:change>
+              <span :class="overallChange >= 0 ? 'text-green-600' : 'text-red-600'">
+                <i18n-n :value="overallChange / 100" format="result" />
+              </span>
+            </template>
+            <template v-slot:numberOfChanges>
+              {{ numberOfSalaryChanges - 1 }}
+            </template>
+            <template v-slot:period>
+              {{ timeElapsed }}
+            </template>
+          </i18n-t>
+        </p>
+        <p>
+          <i18n-t keypath="salary.summary.change.multi.adjusted" :plural="overallChangeAdjusted">
+            <template v-slot:changeAdjusted>
+              <span
+                class="font-semibold"
+                :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+              >
+                <i18n-n :value="overallChangeAdjusted / 100" format="result" />
+              </span>
+            </template>
+          </i18n-t>
+        </p>
+      </template>
+      <template v-else-if="numberOfSalaryChanges === 1 && adjustedSalaries.length > 1">
+        <p>
+          <i18n-t keypath="salary.summary.change.one" :plural="overallChangeAdjusted">
+            <template v-slot:changeAdjusted>
+              <span
+                class="font-semibold"
+                :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+              >
+                <i18n-n :value="overallChangeAdjusted / 100" format="result" />
+              </span>
+            </template>
+            <template v-slot:period>
+              {{ timeElapsed }}
+            </template>
+          </i18n-t>
+        </p>
+        <p class="text-ink-muted">
+          <i18n-t keypath="salary.summary.change.helper" />
+        </p>
+      </template>
+      <template v-else-if="numberOfSalaryChanges === 0">
+        <p class="text-ink-muted">
+          <i18n-t keypath="salary.summary.change.none" />
+        </p>
+      </template>
+
+      <!-- Prochaine augmentation -->
+      <div v-if="lastSalary !== null" class="rounded-xl border border-brand-200 bg-brand-50/50 p-4">
+        <p class="text-sm">
+          <span class="font-semibold text-brand-700">
+            <i18n-t keypath="salary.summary.next.title" />
+          </span>
+          <i18n-t keypath="salary.summary.next.requirement" :plural="minimalRaiseRequired">
+            <template v-slot:disclaimer>
+              <span class="italic text-ink-muted">
+                <i18n-t v-if="numberOfSalaryChanges > 1" keypath="salary.summary.next.disclaimer">
+                  <template v-slot:date>
+                    {{ lastSalary.date }}
+                  </template>
+                </i18n-t>
+              </span>
+            </template>
+            <template v-slot:minimalRaiseRequired>
+              <span class="font-bold text-brand-600">
+                <i18n-n :value="minimalRaiseRequired" format="raise" />
+              </span>
+            </template>
+            <template v-slot:newSalary>
+              <span class="font-semibold text-ink-primary">
+                <i18n-t keypath="salary.summary.next.newSalary">
+                  <template v-slot:income>
+                    <i18n-n :value="minimalNewSalary" format="salary" />
+                  </template>
+                  <template v-slot:currency>
+                    {{ configuration.currency }}
+                  </template>
+                  <template v-slot:recurrence>
+                    {{ salaryRecurrence }}
+                  </template>
+                </i18n-t>
+              </span>
+            </template>
+          </i18n-t>
+        </p>
+      </div>
+    </div>
+
+    <!-- Liens de pied de card -->
+    <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-4 text-xs">
       <span
         v-if="
           numberOfSalaryChanges > 0 &&
           configuration.useCustomInflation &&
           configuration.customInflation !== null
         "
-        class="m-3 block md:inline"
       >
-        <RouterLink to="/configure">
+        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700">
           <i18n-t keypath="salary.summary.custom" />
         </RouterLink>
       </span>
-      <span v-else-if="numberOfSalaryChanges > 0" class="m-3 block md:inline">
-        <RouterLink to="/configure">
+      <span v-else-if="numberOfSalaryChanges > 0">
+        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700">
           <i18n-t keypath="salary.summary.source">
             <template v-slot:country>
               <i18n-t :keypath="'configure.country.options.' + configuration.country" />
@@ -268,11 +331,11 @@ export default defineComponent({
           </i18n-t>
         </RouterLink>
       </span>
-      <span class="m-3 block md:inline">
-        <RouterLink to="/how">
+      <span>
+        <RouterLink to="/how" class="text-brand-600 underline hover:text-brand-700">
           <i18n-t keypath="salary.summary.helper" />
         </RouterLink>
       </span>
-    </p>
+    </div>
   </div>
 </template>

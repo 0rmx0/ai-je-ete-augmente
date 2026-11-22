@@ -199,7 +199,8 @@
     "configure": "⚙️ Configure",
     "home": "🧮 Calculation",
     "how": "🔧 How does it work?",
-    "title": "💸 Did I get a raise?"
+    "title": "💸 Did I get a raise?",
+    "logoSymbol": "€"
   },
   "salary": {
     "chart": {
@@ -216,7 +217,8 @@
       },
       "y": {
         "title": "Buying power in {currency}"
-      }
+      },
+      "title": "Purchasing power evolution"
     },
     "history": {
       "change": {
@@ -305,6 +307,14 @@
         "more": " more than {number} years",
         "nearly": " nearly {number} years",
         "years": "{number} years"
+      },
+      "title": "Summary",
+      "metric": {
+        "announced": "Announced change",
+        "real": "Real change (inflation)",
+        "minRaise": "Minimum raise required",
+        "period": "over {period} months",
+        "newSalary": "i.e. {income}{currency}"
       }
     },
     "warning": {

@@ -160,91 +160,126 @@ export default defineComponent({
 </script>
 
 <template>
-  <main
-    class="p-5 md:flex md:flex-row"
-    :class="salaries.length === 0 ? 'mx-auto max-w-screen-lg' : ''"
-  >
-    <section class="inline-block shrink-0">
-      <div class="contents" :class="salaries.length == 0 ? 'hidden' : ''">
-        <h2 class="my-5 text-lg text-slate-800">
-          <i18n-t keypath="salary.history.title">
-            <template v-slot:number>
-              {{ salaries.length }}
-            </template>
-          </i18n-t>
-        </h2>
-        <ol class="mb-5 border-l-2 border-red-500">
-          <salary-display
-            v-for="(adjustedSalary, index) in adjustedSalaries"
-            v-bind:key="index"
-            v-bind:salary="adjustedSalary"
-            v-on:removeSalary="removeSalary"
+  <main class="mx-auto w-full max-w-[1440px] flex-1 px-6 py-6 lg:px-8">
+    <div class="flex flex-col gap-6 lg:flex-row">
+      <!-- Colonne gauche : historique + formulaires -->
+      <aside class="w-full shrink-0 lg:w-[380px]">
+        <div class="card flex flex-col gap-5">
+          <!-- Historique des salaires -->
+          <template v-if="salaries.length > 0">
+            <h2 class="section-title">
+              <i18n-t keypath="salary.history.title">
+                <template v-slot:number>
+                  {{ salaries.length }}
+                </template>
+              </i18n-t>
+            </h2>
+            <ol class="flex flex-col gap-3">
+              <salary-display
+                v-for="(adjustedSalary, index) in adjustedSalaries"
+                v-bind:key="index"
+                v-bind:salary="adjustedSalary"
+                v-on:removeSalary="removeSalary"
+              />
+            </ol>
+          </template>
+
+          <hr class="border-slate-100" />
+
+          <!-- Mode de calcul -->
+          <details class="group">
+            <summary
+              class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+            >
+              <i18n-t keypath="salary.incomeMode.title" />
+            </summary>
+            <p
+              class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted"
+            >
+              <i18n-t keypath="salary.incomeMode.helper" />
+            </p>
+            <income-mode-select class="mt-3" />
+          </details>
+
+          <hr class="border-slate-100" />
+
+          <!-- Actions : rapport, import, backup -->
+          <div class="flex flex-col gap-3">
+            <salary-report-button
+              v-bind:salaries="salaries"
+              v-bind:adjusted-salaries="adjustedSalaries"
+              v-bind:inflation-rates="activeInflationRates"
+              v-bind:missing-inflation-rates="missingInflationRates[0]"
+              v-bind:last-known-inflation-rate="missingInflationRates[1]"
+            />
+            <salary-import
+              v-on:addSalaries="addSalaries"
+              v-bind:salaries="salaries"
+              v-bind:next-key="nextKey"
+            />
+            <salary-backup
+              v-on:addSalaries="addSalaries"
+              v-bind:salaries="salaries"
+              v-bind:next-key="nextKey"
+            />
+          </div>
+
+          <hr class="border-slate-100" />
+
+          <!-- Formulaire d'ajout -->
+          <salary-new
+            v-on:addSalary="addSalary"
+            v-bind:salaries="salaries"
+            v-bind:new-key="nextKey"
           />
-        </ol>
-      </div>
-      <details class="mb-5">
-        <summary class="cursor-pointer text-slate-800">
-          <i18n-t keypath="salary.incomeMode.title" />
-        </summary>
-        <blockquote class="mt-3 rounded border border-slate-300 p-3 text-sm text-slate-500">
-          <i18n-t keypath="salary.incomeMode.helper" />
-        </blockquote>
-        <income-mode-select class="mt-3" />
-      </details>
-      <salary-report-button
-        v-bind:salaries="salaries"
-        v-bind:adjusted-salaries="adjustedSalaries"
-        v-bind:inflation-rates="activeInflationRates"
-        v-bind:missing-inflation-rates="missingInflationRates[0]"
-        v-bind:last-known-inflation-rate="missingInflationRates[1]"
-      />
-      <salary-import
-        v-on:addSalaries="addSalaries"
-        v-bind:salaries="salaries"
-        v-bind:next-key="nextKey"
-      />
-      <salary-backup
-        v-on:addSalaries="addSalaries"
-        v-bind:salaries="salaries"
-        v-bind:next-key="nextKey"
-      />
-      <salary-new v-on:addSalary="addSalary" v-bind:salaries="salaries" v-bind:new-key="nextKey" />
-    </section>
-    <section class="grow">
-      <div class="sticky top-0 z-10 bg-white pb-2 pt-5">
-        <inflation-chart :adjusted-salaries="adjustedSalaries" />
-        <p v-if="salaries.length > 0" class="mx-5 p-2 text-sm italic">
-          <i18n-t v-if="missingInflationRates[1] !== null" keypath="salary.warning.lastKnown">
-            <template v-slot:date>
-              {{ missingInflationRates[1] }}
-            </template>
-          </i18n-t>
-          <i18n-t
-            v-if="missingInflationRates[0].length > 0"
-            keypath="salary.warning.missings"
-            :plural="missingInflationRates[0].length"
-          >
-            <template v-slot:dates>
-              {{ missingInflationRates[0].join(', ') }}
-            </template>
-            <template v-slot:number>
-              {{ missingInflationRates[0].length }}
-            </template>
-          </i18n-t>
-          <i18n-t v-if="missingInflationRates[1] === null" keypath="salary.warning.noKnown" />
-        </p>
-        <salary-projection
-          v-if="salaries.length > 0"
-          :salaries="salaries"
-          :inflation-rates="activeInflationRates"
-          :suggested-raise-percent="suggestedRaisePercent"
-        />
-        <adjusted-salaries-summary
-          :adjusted-salaries="adjustedSalaries"
-          :last-salary="lastSalaryAdjusted[0]"
-          :last-salary-adjusted="lastSalaryAdjusted[1]"
-        />
-      </div>
-    </section>
+        </div>
+      </aside>
+
+      <!-- Colonne droite : graphique + résumé -->
+      <section class="min-w-0 flex-1">
+        <div class="flex flex-col gap-6">
+          <!-- Graphique -->
+          <div class="card">
+            <h2 class="section-title mb-4">
+              <i18n-t keypath="salary.chart.title" />
+            </h2>
+            <inflation-chart :adjusted-salaries="adjustedSalaries" />
+            <p v-if="salaries.length > 0" class="mt-3 text-sm italic text-ink-muted">
+              <i18n-t v-if="missingInflationRates[1] !== null" keypath="salary.warning.lastKnown">
+                <template v-slot:date>
+                  {{ missingInflationRates[1] }}
+                </template>
+              </i18n-t>
+              <i18n-t
+                v-if="missingInflationRates[0].length > 0"
+                keypath="salary.warning.missings"
+                :plural="missingInflationRates[0].length"
+              >
+                <template v-slot:dates>
+                  {{ missingInflationRates[0].join(', ') }}
+                </template>
+                <template v-slot:number>
+                  {{ missingInflationRates[0].length }}
+                </template>
+              </i18n-t>
+              <i18n-t v-if="missingInflationRates[1] === null" keypath="salary.warning.noKnown" />
+            </p>
+            <salary-projection
+              v-if="salaries.length > 0"
+              :salaries="salaries"
+              :inflation-rates="activeInflationRates"
+              :suggested-raise-percent="suggestedRaisePercent"
+            />
+          </div>
+
+          <!-- Résumé -->
+          <adjusted-salaries-summary
+            :adjusted-salaries="adjustedSalaries"
+            :last-salary="lastSalaryAdjusted[0]"
+            :last-salary-adjusted="lastSalaryAdjusted[1]"
+          />
+        </div>
+      </section>
+    </div>
   </main>
 </template>

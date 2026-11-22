@@ -91,17 +91,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <details class="mb-5">
-    <summary class="cursor-pointer text-slate-800">
+  <details class="group/details">
+    <summary
+      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+    >
       <i18n-t keypath="salary.backup.title" />
     </summary>
-    <blockquote class="mt-3 rounded border border-slate-300 p-3 text-sm text-slate-500">
+    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted">
       <i18n-t keypath="salary.backup.helper" />
-    </blockquote>
-    <div class="mt-3">
+    </p>
+    <div class="mt-3 flex gap-2">
       <button
         type="button"
-        class="mr-2 rounded border border-slate-500 p-2 text-sm text-slate-700 hover:bg-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+        class="btn-secondary flex-1 !py-2 text-xs"
         v-bind:disabled="salaries.length === 0"
         v-on:click="exportJson"
       >
@@ -109,7 +111,7 @@ export default defineComponent({
       </button>
       <button
         type="button"
-        class="rounded border border-slate-500 p-2 text-sm text-slate-700 hover:bg-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+        class="btn-secondary flex-1 !py-2 text-xs"
         v-bind:disabled="salaries.length === 0"
         v-on:click="exportCsv"
       >
@@ -117,24 +119,24 @@ export default defineComponent({
       </button>
     </div>
     <form class="mt-3" v-on:submit.prevent="">
-      <label for="backupFile" class="mb-1 block">
+      <label for="backupFile" class="label-text">
         <i18n-t keypath="salary.backup.importLabel" />
       </label>
       <input
         id="backupFile"
         type="file"
         accept=".json,.csv,application/json,text/csv"
-        class="block w-full text-sm"
+        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-ink-secondary hover:file:bg-slate-200"
         v-on:change="onBackupFileChange"
       />
     </form>
     <p
       v-if="errorMessage !== ''"
       role="alert"
-      class="mt-3 rounded border border-orange-500 bg-orange-100 p-2 text-sm text-orange-700"
+      class="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
     >
       {{ errorMessage }}
     </p>
-    <p v-if="message !== ''" class="mt-3 text-sm text-green-700">{{ message }}</p>
+    <p v-if="message !== ''" class="mt-3 text-sm font-medium text-green-700">{{ message }}</p>
   </details>
 </template>
