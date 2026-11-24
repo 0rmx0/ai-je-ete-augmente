@@ -134,17 +134,17 @@ export default defineComponent({
     <!-- Métriques en grille -->
     <div v-if="numberOfSalaryChanges > 1" class="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <!-- Évolution annoncée -->
-      <div class="rounded-xl bg-slate-50 p-4">
-        <p class="text-sm font-medium text-ink-muted">
+      <div class="rounded-xl bg-slate-50 p-4 dark:bg-zinc-800/50">
+        <p class="text-sm font-medium text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.metric.announced" />
         </p>
         <p
           class="mt-1 text-2xl font-bold"
-          :class="overallChange >= 0 ? 'text-green-600' : 'text-red-600'"
+          :class="overallChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
         >
           <i18n-n :value="overallChange / 100" format="result" />
         </p>
-        <p class="mt-1 text-xs text-ink-faint">
+        <p class="mt-1 text-xs text-ink-faint dark:text-zinc-500">
           <i18n-t keypath="salary.summary.metric.period" :plural="adjustedSalaries.length">
             <template v-slot:period>{{ adjustedSalaries.length }}</template>
           </i18n-t>
@@ -152,28 +152,28 @@ export default defineComponent({
       </div>
 
       <!-- Évolution réelle -->
-      <div class="rounded-xl p-4" :class="overallChangeAdjusted >= 0 ? 'bg-green-50' : 'bg-red-50'">
-        <p class="text-sm font-medium text-ink-muted">
+      <div class="rounded-xl p-4" :class="overallChangeAdjusted >= 0 ? 'bg-green-50 dark:bg-green-950/50' : 'bg-red-50 dark:bg-red-950/50'">
+        <p class="text-sm font-medium text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.metric.real" />
         </p>
         <p
           class="mt-1 text-2xl font-bold"
-          :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+          :class="overallChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
         >
           <i18n-n :value="overallChangeAdjusted / 100" format="result" />
         </p>
-        <p class="mt-1 text-xs text-ink-faint">{{ timeElapsed }}</p>
+        <p class="mt-1 text-xs text-ink-faint dark:text-zinc-500">{{ timeElapsed }}</p>
       </div>
 
       <!-- Augmentation minimale requise -->
-      <div v-if="lastSalary !== null" class="rounded-xl bg-brand-50 p-4">
-        <p class="text-sm font-medium text-ink-muted">
+      <div v-if="lastSalary !== null" class="rounded-xl bg-brand-50 p-4 dark:bg-brand-950/50">
+        <p class="text-sm font-medium text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.metric.minRaise" />
         </p>
-        <p class="mt-1 text-2xl font-bold text-brand-600">
+        <p class="mt-1 text-2xl font-bold text-brand-600 dark:text-brand-400">
           <i18n-n :value="minimalRaiseRequired" format="raise" />
         </p>
-        <p class="mt-1 text-xs text-ink-faint">
+        <p class="mt-1 text-xs text-ink-faint dark:text-zinc-500">
           <i18n-t keypath="salary.summary.metric.newSalary">
             <template v-slot:income>
               <i18n-n :value="minimalNewSalary" format="salary" />
@@ -185,12 +185,12 @@ export default defineComponent({
     </div>
 
     <!-- Texte détaillé -->
-    <div class="mt-4 space-y-2 text-sm leading-relaxed text-ink-secondary">
+    <div class="mt-4 space-y-2 text-sm leading-relaxed text-ink-secondary dark:text-zinc-300">
       <template v-if="numberOfSalaryChanges > 1">
         <p>
           <i18n-t keypath="salary.summary.change.multi.overall">
             <template v-slot:baseIncome>
-              <span class="font-semibold text-ink-primary">
+              <span class="font-semibold text-ink-primary dark:text-zinc-50">
                 <i18n-t keypath="global.salary">
                   <template v-slot:income>
                     <i18n-n :value="incomeReference" format="salary" />
@@ -202,12 +202,12 @@ export default defineComponent({
               </span>
             </template>
             <template v-slot:finalIncome>
-              <span class="text-ink-faint line-through">
+              <span class="text-ink-faint line-through dark:text-zinc-500">
                 <i18n-n :value="incomeFinal" format="salary" />{{ configuration.currency }}
               </span>
             </template>
             <template v-slot:finalIncomeAdjusted>
-              <span class="font-semibold text-ink-primary">
+              <span class="font-semibold text-ink-primary dark:text-zinc-50">
                 <i18n-n :value="incomeFinalAdjusted" format="salary" />{{ configuration.currency }}
               </span>
             </template>
@@ -217,7 +217,7 @@ export default defineComponent({
         <p>
           <i18n-t keypath="salary.summary.change.multi.announced" :plural="overallChange">
             <template v-slot:change>
-              <span :class="overallChange >= 0 ? 'text-green-600' : 'text-red-600'">
+              <span :class="overallChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
                 <i18n-n :value="overallChange / 100" format="result" />
               </span>
             </template>
@@ -234,7 +234,7 @@ export default defineComponent({
             <template v-slot:changeAdjusted>
               <span
                 class="font-semibold"
-                :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+                :class="overallChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
               >
                 <i18n-n :value="overallChangeAdjusted / 100" format="result" />
               </span>
@@ -248,7 +248,7 @@ export default defineComponent({
             <template v-slot:changeAdjusted>
               <span
                 class="font-semibold"
-                :class="overallChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+                :class="overallChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
               >
                 <i18n-n :value="overallChangeAdjusted / 100" format="result" />
               </span>
@@ -258,25 +258,25 @@ export default defineComponent({
             </template>
           </i18n-t>
         </p>
-        <p class="text-ink-muted">
+        <p class="text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.change.helper" />
         </p>
       </template>
       <template v-else-if="numberOfSalaryChanges === 0">
-        <p class="text-ink-muted">
+        <p class="text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.change.none" />
         </p>
       </template>
 
       <!-- Prochaine augmentation -->
-      <div v-if="lastSalary !== null" class="rounded-xl border border-brand-200 bg-brand-50/50 p-4">
+      <div v-if="lastSalary !== null" class="rounded-xl border border-brand-200 bg-brand-50/50 p-4 dark:border-brand-900/50 dark:bg-brand-950/30">
         <p class="text-sm">
-          <span class="font-semibold text-brand-700">
+          <span class="font-semibold text-brand-700 dark:text-brand-400">
             <i18n-t keypath="salary.summary.next.title" />
           </span>
           <i18n-t keypath="salary.summary.next.requirement" :plural="minimalRaiseRequired">
             <template v-slot:disclaimer>
-              <span class="italic text-ink-muted">
+              <span class="italic text-ink-muted dark:text-zinc-400">
                 <i18n-t v-if="numberOfSalaryChanges > 1" keypath="salary.summary.next.disclaimer">
                   <template v-slot:date>
                     {{ lastSalary.date }}
@@ -285,12 +285,12 @@ export default defineComponent({
               </span>
             </template>
             <template v-slot:minimalRaiseRequired>
-              <span class="font-bold text-brand-600">
+              <span class="font-bold text-brand-600 dark:text-brand-400">
                 <i18n-n :value="minimalRaiseRequired" format="raise" />
               </span>
             </template>
             <template v-slot:newSalary>
-              <span class="font-semibold text-ink-primary">
+              <span class="font-semibold text-ink-primary dark:text-zinc-50">
                 <i18n-t keypath="salary.summary.next.newSalary">
                   <template v-slot:income>
                     <i18n-n :value="minimalNewSalary" format="salary" />
@@ -310,7 +310,7 @@ export default defineComponent({
     </div>
 
     <!-- Liens de pied de card -->
-    <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-4 text-xs">
+    <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-4 text-xs dark:border-zinc-800">
       <span
         v-if="
           numberOfSalaryChanges > 0 &&
@@ -318,12 +318,12 @@ export default defineComponent({
           configuration.customInflation !== null
         "
       >
-        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700">
+        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
           <i18n-t keypath="salary.summary.custom" />
         </RouterLink>
       </span>
       <span v-else-if="numberOfSalaryChanges > 0">
-        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700">
+        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
           <i18n-t keypath="salary.summary.source">
             <template v-slot:country>
               <i18n-t :keypath="'configure.country.options.' + configuration.country" />
@@ -332,7 +332,7 @@ export default defineComponent({
         </RouterLink>
       </span>
       <span>
-        <RouterLink to="/how" class="text-brand-600 underline hover:text-brand-700">
+        <RouterLink to="/how" class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
           <i18n-t keypath="salary.summary.helper" />
         </RouterLink>
       </span>

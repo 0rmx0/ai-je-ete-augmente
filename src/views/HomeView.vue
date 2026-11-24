@@ -184,24 +184,24 @@ export default defineComponent({
             </ol>
           </template>
 
-          <hr class="border-slate-100" />
+          <hr class="border-slate-100 dark:border-zinc-800" />
 
           <!-- Mode de calcul -->
           <details class="group">
             <summary
-              class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+              class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary dark:text-zinc-300 dark:hover:text-zinc-50"
             >
               <i18n-t keypath="salary.incomeMode.title" />
             </summary>
             <p
-              class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted"
+              class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400"
             >
               <i18n-t keypath="salary.incomeMode.helper" />
             </p>
             <income-mode-select class="mt-3" />
           </details>
 
-          <hr class="border-slate-100" />
+          <hr class="border-slate-100 dark:border-zinc-800" />
 
           <!-- Actions : rapport, import, backup -->
           <div class="flex flex-col gap-3">
@@ -224,7 +224,7 @@ export default defineComponent({
             />
           </div>
 
-          <hr class="border-slate-100" />
+          <hr class="border-slate-100 dark:border-zinc-800" />
 
           <!-- Formulaire d'ajout -->
           <salary-new
@@ -244,7 +244,7 @@ export default defineComponent({
               <i18n-t keypath="salary.chart.title" />
             </h2>
             <inflation-chart :adjusted-salaries="adjustedSalaries" />
-            <p v-if="salaries.length > 0" class="mt-3 text-sm italic text-ink-muted">
+            <p v-if="salaries.length > 0" class="mt-3 text-sm italic text-ink-muted dark:text-zinc-400">
               <i18n-t v-if="missingInflationRates[1] !== null" keypath="salary.warning.lastKnown">
                 <template v-slot:date>
                   {{ missingInflationRates[1] }}

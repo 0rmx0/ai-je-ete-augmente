@@ -27,11 +27,11 @@ export default defineComponent({
           v-model="configuration.incomeMode"
           id="incomeGrossAnnual"
           name="incomeMode"
-          class="peer/gross-annual h-4 w-4 border-slate-300 text-brand-600 focus:ring-brand-500"
+          class="peer/gross-annual h-4 w-4 border-slate-300 text-brand-600 focus:ring-brand-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-brand-500"
         />
         <label
           for="incomeGrossAnnual"
-          class="text-sm text-ink-secondary peer-checked/gross-annual:font-semibold peer-checked/gross-annual:text-ink-primary"
+          class="text-sm text-ink-secondary peer-checked/gross-annual:font-semibold peer-checked/gross-annual:text-ink-primary dark:text-zinc-300 dark:peer-checked/gross-annual:text-zinc-50"
         >
           <i18n-t keypath="configure.incomeMode.grossAnnual.label" />
         </label>
@@ -44,11 +44,11 @@ export default defineComponent({
           v-model="configuration.incomeMode"
           id="incomeNetMonthly"
           name="incomeMode"
-          class="peer/net-monthly h-4 w-4 border-slate-300 text-brand-600 focus:ring-brand-500"
+          class="peer/net-monthly h-4 w-4 border-slate-300 text-brand-600 focus:ring-brand-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-brand-500"
         />
         <label
           for="incomeNetMonthly"
-          class="text-sm text-ink-secondary peer-checked/net-monthly:font-semibold peer-checked/net-monthly:text-ink-primary"
+          class="text-sm text-ink-secondary peer-checked/net-monthly:font-semibold peer-checked/net-monthly:text-ink-primary dark:text-zinc-300 dark:peer-checked/net-monthly:text-zinc-50"
         >
           <i18n-t keypath="configure.incomeMode.netMonthly.label" />
         </label>
@@ -61,11 +61,11 @@ export default defineComponent({
           v-model="configuration.incomeMode"
           id="incomeHourlyRate"
           name="incomeMode"
-          class="peer/hourly-rate h-4 w-4 border-slate-300 text-brand-600 focus:ring-brand-500"
+          class="peer/hourly-rate h-4 w-4 border-slate-300 text-brand-600 focus:ring-brand-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-brand-500"
         />
         <label
           for="incomeHourlyRate"
-          class="text-sm text-ink-secondary peer-checked/hourly-rate:font-semibold peer-checked/hourly-rate:text-ink-primary"
+          class="text-sm text-ink-secondary peer-checked/hourly-rate:font-semibold peer-checked/hourly-rate:text-ink-primary dark:text-zinc-300 dark:peer-checked/hourly-rate:text-zinc-50"
         >
           <i18n-t keypath="configure.incomeMode.hourlyRate.label" />
         </label>
@@ -73,22 +73,22 @@ export default defineComponent({
     </div>
 
     <p
-      class="mt-2 hidden text-xs text-ink-muted peer-checked/gross-annual:block peer-hover/gross-annual:block peer-hover/hourly-rate:hidden peer-hover/net-monthly:hidden"
+      class="mt-2 hidden text-xs text-ink-muted peer-checked/gross-annual:block peer-hover/gross-annual:block peer-hover/hourly-rate:hidden peer-hover/net-monthly:hidden dark:text-zinc-400"
     >
       <i18n-t keypath="configure.incomeMode.grossAnnual.helper" />
     </p>
     <p
-      class="mt-2 hidden text-xs text-ink-muted peer-checked/net-monthly:block peer-hover/net-monthly:block peer-hover/gross-annual:hidden peer-hover/hourly-rate:hidden"
+      class="mt-2 hidden text-xs text-ink-muted peer-checked/net-monthly:block peer-hover/net-monthly:block peer-hover/gross-annual:hidden peer-hover/hourly-rate:hidden dark:text-zinc-400"
     >
       <i18n-t keypath="configure.incomeMode.netMonthly.helper" />
     </p>
     <p
-      class="mt-2 hidden text-xs text-ink-muted peer-checked/hourly-rate:block peer-hover/hourly-rate:block peer-hover/gross-annual:hidden peer-hover/net-monthly:hidden"
+      class="mt-2 hidden text-xs text-ink-muted peer-checked/hourly-rate:block peer-hover/hourly-rate:block peer-hover/gross-annual:hidden peer-hover/net-monthly:hidden dark:text-zinc-400"
     >
       <i18n-t keypath="configure.incomeMode.hourlyRate.helper" />
     </p>
 
-    <div class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/gross-annual:block">
+    <div class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/gross-annual:block dark:bg-zinc-800/50">
       <label for="incomeImposition" class="label-text !mb-1">
         <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.label" />
       </label>
@@ -103,11 +103,11 @@ export default defineComponent({
         name="incomeImposition"
         class="input-field !w-24"
       />
-      <p class="mt-1 text-xs text-ink-muted">
+      <p class="mt-1 text-xs text-ink-muted dark:text-zinc-400">
         <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.helper" />
       </p>
     </div>
-    <div class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/hourly-rate:block">
+    <div class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/hourly-rate:block dark:bg-zinc-800/50">
       <div class="flex flex-wrap gap-4">
         <div>
           <label for="incomeHourlyImposition" class="label-text !mb-1">
@@ -124,7 +124,7 @@ export default defineComponent({
             name="incomeHourlyImposition"
             class="input-field !w-24"
           />
-          <p class="mt-1 text-xs text-ink-muted">
+          <p class="mt-1 text-xs text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="configure.incomeMode.hourlyRate.imposition.helper" />
           </p>
         </div>
@@ -143,7 +143,7 @@ export default defineComponent({
             name="incomeMonthlyHours"
             class="input-field !w-28"
           />
-          <p class="mt-1 text-xs text-ink-muted">
+          <p class="mt-1 text-xs text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="configure.incomeMode.hourlyRate.monthlyHours.helper" />
           </p>
         </div>

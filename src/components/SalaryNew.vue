@@ -161,7 +161,7 @@ export default defineComponent({
   <p
     v-if="errorMessage !== ''"
     role="alert"
-    class="rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
+    class="rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700 dark:border-orange-900 dark:bg-orange-950/50 dark:text-orange-400"
   >
     {{ errorMessage }}
   </p>

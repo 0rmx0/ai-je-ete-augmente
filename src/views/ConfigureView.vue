@@ -99,7 +99,7 @@ export default defineComponent({
     <!-- Notification de sauvegarde -->
     <div
       v-if="saved > 0"
-      class="mb-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800"
+      class="mb-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800 dark:border-green-900 dark:bg-green-950 dark:text-green-300"
     >
       <i18n-t keypath="configure.saved" :plural="saved">
         <template v-slot:count>
@@ -109,7 +109,7 @@ export default defineComponent({
     </div>
     <div
       v-else
-      class="mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-ink-muted"
+      class="mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400"
     >
       <i18n-t keypath="configure.autosave" />
     </div>
@@ -137,11 +137,11 @@ export default defineComponent({
             type="checkbox"
             v-model="configuration.useCustomInflation"
             id="useCustomInflation"
-            class="peer/custom-inflation h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+            class="peer/custom-inflation h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-brand-500"
           />
           <label
             for="useCustomInflation"
-            class="text-sm font-medium text-ink-secondary peer-checked/custom-inflation:text-ink-primary"
+            class="text-sm font-medium text-ink-secondary peer-checked/custom-inflation:text-ink-primary dark:text-zinc-300 dark:peer-checked/custom-inflation:text-zinc-50"
           >
             <i18n-t keypath="configure.custom.label" />
           </label>
@@ -173,10 +173,10 @@ export default defineComponent({
             class="input-field font-mono text-xs"
             :placeholder="$t('configure.custom.placeholder')"
           ></textarea>
-          <p class="mt-1.5 text-xs text-ink-muted">
+          <p class="mt-1.5 text-xs text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="configure.custom.helper" />
           </p>
-          <p v-if="pendingCustomInflation" class="mt-1.5 text-xs text-orange-700">
+          <p v-if="pendingCustomInflation" class="mt-1.5 text-xs text-orange-700 dark:text-orange-400">
             <i18n-t keypath="configure.custom.error" />
           </p>
         </div>
@@ -196,7 +196,7 @@ export default defineComponent({
               id="configCurrency"
               class="input-field"
             />
-            <p class="mt-1.5 text-xs text-ink-muted">
+            <p class="mt-1.5 text-xs text-ink-muted dark:text-zinc-400">
               <i18n-t keypath="configure.currency.helper" />
             </p>
           </div>
@@ -216,7 +216,7 @@ export default defineComponent({
             <i18n-t :keypath="'configure.raiseMode.options.' + raiseMode" />
           </option>
         </select>
-        <p class="mt-1.5 text-xs text-ink-muted">
+        <p class="mt-1.5 text-xs text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="configure.raiseMode.helper" />
         </p>
         <div v-if="configuration.raiseMode === 'index-point'" class="mt-4">
@@ -232,14 +232,14 @@ export default defineComponent({
             id="indexPointValue"
             class="input-field"
           />
-          <p class="mt-1.5 text-xs text-ink-muted">
+          <p class="mt-1.5 text-xs text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="configure.indexPointValue.helper" />
           </p>
         </div>
       </div>
 
       <!-- Reset -->
-      <div class="card border-red-200">
+      <div class="card border-red-200 dark:border-red-900/50">
         <button type="button" v-on:click.prevent="reset()" class="btn-danger">
           <i18n-t keypath="configure.data.reset" />
         </button>

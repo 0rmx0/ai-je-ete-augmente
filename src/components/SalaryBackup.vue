@@ -93,11 +93,11 @@ export default defineComponent({
 <template>
   <details class="group/details">
     <summary
-      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary dark:text-zinc-300 dark:hover:text-zinc-50"
     >
       <i18n-t keypath="salary.backup.title" />
     </summary>
-    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted">
+    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400">
       <i18n-t keypath="salary.backup.helper" />
     </p>
     <div class="mt-3 flex gap-2">
@@ -126,17 +126,17 @@ export default defineComponent({
         id="backupFile"
         type="file"
         accept=".json,.csv,application/json,text/csv"
-        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-ink-secondary hover:file:bg-slate-200"
+        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-ink-secondary hover:file:bg-slate-200 dark:file:bg-zinc-700 dark:file:text-zinc-300 dark:hover:file:bg-zinc-600"
         v-on:change="onBackupFileChange"
       />
     </form>
     <p
       v-if="errorMessage !== ''"
       role="alert"
-      class="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
+      class="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700 dark:border-orange-900 dark:bg-orange-950/50 dark:text-orange-400"
     >
       {{ errorMessage }}
     </p>
-    <p v-if="message !== ''" class="mt-3 text-sm font-medium text-green-700">{{ message }}</p>
+    <p v-if="message !== ''" class="mt-3 text-sm font-medium text-green-700 dark:text-green-400">{{ message }}</p>
   </details>
 </template>
