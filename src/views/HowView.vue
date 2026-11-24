@@ -1,6 +1,6 @@
 <template>
   <main class="mx-auto w-full max-w-3xl flex-1 px-6 py-6 lg:px-8">
-    <article class="card prose prose-slate max-w-none dark:prose-invert">
+    <article class="card prose prose-slate dark:prose-invert max-w-none">
       <h2 class="section-title">
         <i18n-t keypath="how.usage.title" />
       </h2>
@@ -8,7 +8,10 @@
         <p>
           <i18n-t keypath="how.usage.p1.p">
             <template v-slot:link>
-              <RouterLink to="/" class="font-medium text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
+              <RouterLink
+                to="/"
+                class="font-medium text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+              >
                 <i18n-t keypath="how.usage.p1.link" />
               </RouterLink>
             </template>

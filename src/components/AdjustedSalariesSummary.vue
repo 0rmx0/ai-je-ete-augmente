@@ -140,7 +140,11 @@ export default defineComponent({
         </p>
         <p
           class="mt-1 text-2xl font-bold"
-          :class="overallChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+          :class="
+            overallChange >= 0
+              ? 'text-green-600 dark:text-green-400'
+              : 'text-red-600 dark:text-red-400'
+          "
         >
           <i18n-n :value="overallChange / 100" format="result" />
         </p>
@@ -152,13 +156,24 @@ export default defineComponent({
       </div>
 
       <!-- Évolution réelle -->
-      <div class="rounded-xl p-4" :class="overallChangeAdjusted >= 0 ? 'bg-green-50 dark:bg-green-950/50' : 'bg-red-50 dark:bg-red-950/50'">
+      <div
+        class="rounded-xl p-4"
+        :class="
+          overallChangeAdjusted >= 0
+            ? 'bg-green-50 dark:bg-green-950/50'
+            : 'bg-red-50 dark:bg-red-950/50'
+        "
+      >
         <p class="text-sm font-medium text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.metric.real" />
         </p>
         <p
           class="mt-1 text-2xl font-bold"
-          :class="overallChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+          :class="
+            overallChangeAdjusted >= 0
+              ? 'text-green-600 dark:text-green-400'
+              : 'text-red-600 dark:text-red-400'
+          "
         >
           <i18n-n :value="overallChangeAdjusted / 100" format="result" />
         </p>
@@ -166,7 +181,7 @@ export default defineComponent({
       </div>
 
       <!-- Augmentation minimale requise -->
-      <div v-if="lastSalary !== null" class="rounded-xl bg-brand-50 p-4 dark:bg-brand-950/50">
+      <div v-if="lastSalary !== null" class="dark:bg-brand-950/50 rounded-xl bg-brand-50 p-4">
         <p class="text-sm font-medium text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.summary.metric.minRaise" />
         </p>
@@ -217,7 +232,13 @@ export default defineComponent({
         <p>
           <i18n-t keypath="salary.summary.change.multi.announced" :plural="overallChange">
             <template v-slot:change>
-              <span :class="overallChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
+              <span
+                :class="
+                  overallChange >= 0
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                "
+              >
                 <i18n-n :value="overallChange / 100" format="result" />
               </span>
             </template>
@@ -234,7 +255,11 @@ export default defineComponent({
             <template v-slot:changeAdjusted>
               <span
                 class="font-semibold"
-                :class="overallChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                :class="
+                  overallChangeAdjusted >= 0
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                "
               >
                 <i18n-n :value="overallChangeAdjusted / 100" format="result" />
               </span>
@@ -248,7 +273,11 @@ export default defineComponent({
             <template v-slot:changeAdjusted>
               <span
                 class="font-semibold"
-                :class="overallChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                :class="
+                  overallChangeAdjusted >= 0
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                "
               >
                 <i18n-n :value="overallChangeAdjusted / 100" format="result" />
               </span>
@@ -269,7 +298,10 @@ export default defineComponent({
       </template>
 
       <!-- Prochaine augmentation -->
-      <div v-if="lastSalary !== null" class="rounded-xl border border-brand-200 bg-brand-50/50 p-4 dark:border-brand-900/50 dark:bg-brand-950/30">
+      <div
+        v-if="lastSalary !== null"
+        class="dark:border-brand-900/50 dark:bg-brand-950/30 rounded-xl border border-brand-200 bg-brand-50/50 p-4"
+      >
         <p class="text-sm">
           <span class="font-semibold text-brand-700 dark:text-brand-400">
             <i18n-t keypath="salary.summary.next.title" />
@@ -310,7 +342,9 @@ export default defineComponent({
     </div>
 
     <!-- Liens de pied de card -->
-    <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-4 text-xs dark:border-zinc-800">
+    <div
+      class="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-4 text-xs dark:border-zinc-800"
+    >
       <span
         v-if="
           numberOfSalaryChanges > 0 &&
@@ -318,12 +352,18 @@ export default defineComponent({
           configuration.customInflation !== null
         "
       >
-        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
+        <RouterLink
+          to="/configure"
+          class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+        >
           <i18n-t keypath="salary.summary.custom" />
         </RouterLink>
       </span>
       <span v-else-if="numberOfSalaryChanges > 0">
-        <RouterLink to="/configure" class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
+        <RouterLink
+          to="/configure"
+          class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+        >
           <i18n-t keypath="salary.summary.source">
             <template v-slot:country>
               <i18n-t :keypath="'configure.country.options.' + configuration.country" />
@@ -332,7 +372,10 @@ export default defineComponent({
         </RouterLink>
       </span>
       <span>
-        <RouterLink to="/how" class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
+        <RouterLink
+          to="/how"
+          class="text-brand-600 underline hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+        >
           <i18n-t keypath="salary.summary.helper" />
         </RouterLink>
       </span>

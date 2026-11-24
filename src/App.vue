@@ -27,7 +27,9 @@ export default {
 
 <template>
   <div class="flex min-h-screen flex-col">
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
+    <header
+      class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95"
+    >
       <div class="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-8">
         <RouterLink to="/" class="flex items-center gap-3">
           <span

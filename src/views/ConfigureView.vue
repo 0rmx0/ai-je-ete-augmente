@@ -176,7 +176,10 @@ export default defineComponent({
           <p class="mt-1.5 text-xs text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="configure.custom.helper" />
           </p>
-          <p v-if="pendingCustomInflation" class="mt-1.5 text-xs text-orange-700 dark:text-orange-400">
+          <p
+            v-if="pendingCustomInflation"
+            class="mt-1.5 text-xs text-orange-700 dark:text-orange-400"
+          >
             <i18n-t keypath="configure.custom.error" />
           </p>
         </div>

@@ -113,7 +113,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <details class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
+  <details
+    class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50"
+  >
     <summary
       class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary dark:text-zinc-300 dark:hover:text-zinc-50"
     >
@@ -158,10 +160,17 @@ export default defineComponent({
         />
       </div>
     </form>
-    <p v-if="projectionError !== ''" role="alert" class="mt-3 text-sm text-orange-700 dark:text-orange-400">
+    <p
+      v-if="projectionError !== ''"
+      role="alert"
+      class="mt-3 text-sm text-orange-700 dark:text-orange-400"
+    >
       {{ projectionError }}
     </p>
-    <div v-if="projection !== null" class="mt-3 rounded-lg bg-white p-3 text-sm shadow-card dark:bg-zinc-900 dark:shadow-none">
+    <div
+      v-if="projection !== null"
+      class="mt-3 rounded-lg bg-white p-3 text-sm shadow-card dark:bg-zinc-900 dark:shadow-none"
+    >
       <p>
         <i18n-t keypath="salary.projection.result" :plural="projection.salaryChangeAdjusted">
           <template v-slot:date>{{ targetDate }}</template>
@@ -176,7 +185,11 @@ export default defineComponent({
           <template v-slot:change>
             <span
               class="font-semibold"
-              :class="projection.salaryChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+              :class="
+                projection.salaryChangeAdjusted >= 0
+                  ? 'text-green-600 dark:text-green-400'
+                  : 'text-red-600 dark:text-red-400'
+              "
             >
               <i18n-n :value="projection.salaryChangeAdjusted / 100" format="result" />
             </span>

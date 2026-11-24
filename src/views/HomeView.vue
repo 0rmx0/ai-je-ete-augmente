@@ -244,7 +244,10 @@ export default defineComponent({
               <i18n-t keypath="salary.chart.title" />
             </h2>
             <inflation-chart :adjusted-salaries="adjustedSalaries" />
-            <p v-if="salaries.length > 0" class="mt-3 text-sm italic text-ink-muted dark:text-zinc-400">
+            <p
+              v-if="salaries.length > 0"
+              class="mt-3 text-sm italic text-ink-muted dark:text-zinc-400"
+            >
               <i18n-t v-if="missingInflationRates[1] !== null" keypath="salary.warning.lastKnown">
                 <template v-slot:date>
                   {{ missingInflationRates[1] }}
