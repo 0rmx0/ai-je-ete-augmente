@@ -63,10 +63,10 @@ export default defineComponent({
       class="flex items-start gap-3 rounded-xl border p-3.5 transition-shadow hover:shadow-card"
       :class="
         salary.state === 'up'
-          ? 'border-green-200 bg-green-50/50'
+          ? 'border-green-200 bg-green-50/50 dark:border-green-900/50 dark:bg-green-950/30'
           : salary.state === 'down'
-          ? 'border-red-200 bg-red-50/50'
-          : 'border-slate-200 bg-slate-50'
+          ? 'border-red-200 bg-red-50/50 dark:border-red-900/50 dark:bg-red-950/30'
+          : 'border-slate-200 bg-slate-50 dark:border-zinc-800 dark:bg-zinc-800/50'
       "
     >
       <!-- Indicateur visuel -->
@@ -74,10 +74,10 @@ export default defineComponent({
         class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs"
         :class="
           salary.state === 'up'
-            ? 'bg-green-100 text-green-700'
+            ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
             : salary.state === 'down'
-            ? 'bg-red-100 text-red-600'
-            : 'bg-slate-200 text-slate-500'
+            ? 'bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300'
+            : 'bg-slate-200 text-slate-500 dark:bg-zinc-700 dark:text-zinc-400'
         "
       >
         <i18n-t v-if="salary.state === 'up'" keypath="salary.history.indicator.up" />
@@ -86,8 +86,8 @@ export default defineComponent({
       </span>
 
       <div class="min-w-0 flex-1">
-        <p class="text-xs font-medium text-ink-faint">{{ salary.originalSalary.date }}</p>
-        <h3 class="mt-0.5 text-base font-semibold text-ink-primary">
+        <p class="text-xs font-medium text-ink-faint dark:text-zinc-500">{{ salary.originalSalary.date }}</p>
+        <h3 class="mt-0.5 text-base font-semibold text-ink-primary dark:text-zinc-50">
           <i18n-t keypath="salary.history.change.title">
             <template v-slot:income>
               <i18n-n :value="salary.originalSalary.income" format="salary" />
@@ -96,34 +96,34 @@ export default defineComponent({
               {{ configuration.currency }}
             </template>
             <template v-slot:recurrence>
-              <small class="text-xs font-normal text-ink-muted">{{ salaryRecurrence }}</small>
+              <small class="text-xs font-normal text-ink-muted dark:text-zinc-400">{{ salaryRecurrence }}</small>
             </template>
           </i18n-t>
         </h3>
 
         <div class="mt-1 space-y-0.5">
-          <p v-if="salary.salaryChangeAdjusted === 0" class="text-sm text-ink-muted">
+          <p v-if="salary.salaryChangeAdjusted === 0" class="text-sm text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="salary.history.change.base" />
           </p>
-          <p v-else-if="salary.salaryChange === Infinity" class="text-sm text-ink-muted">
+          <p v-else-if="salary.salaryChange === Infinity" class="text-sm text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="salary.history.change.base" />
           </p>
           <template v-else-if="salary.salaryChange > 0">
-            <p class="text-sm text-ink-muted">
+            <p class="text-sm text-ink-muted dark:text-zinc-400">
               <i18n-t keypath="salary.history.change.increase">
                 <template v-slot:change>
-                  <span class="font-medium text-green-600">
+                  <span class="font-medium text-green-600 dark:text-green-400">
                     <i18n-n :value="salary.salaryChange / 100" format="raise" />
                   </span>
                 </template>
               </i18n-t>
             </p>
-            <p class="text-sm text-ink-muted">
+            <p class="text-sm text-ink-muted dark:text-zinc-400">
               <i18n-t keypath="salary.history.change.increaseAdjusted">
                 <template v-slot:change>
                   <span
                     class="font-semibold"
-                    :class="salary.salaryChangeAdjusted >= 0 ? 'text-green-600' : 'text-red-600'"
+                    :class="salary.salaryChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
                   >
                     <i18n-n :value="salary.salaryChangeAdjusted / 100" format="raise" />
                   </span>
@@ -132,26 +132,26 @@ export default defineComponent({
             </p>
           </template>
           <template v-else-if="salary.salaryChange < 0 && salary.income > 0">
-            <p class="text-sm text-ink-muted">
+            <p class="text-sm text-ink-muted dark:text-zinc-400">
               <i18n-t keypath="salary.history.change.decrease">
                 <template v-slot:change>
-                  <span class="font-medium text-red-600">
+                  <span class="font-medium text-red-600 dark:text-red-400">
                     <i18n-n :value="salary.salaryChange / 100" format="raise" />
                   </span>
                 </template>
               </i18n-t>
             </p>
-            <p class="text-sm text-ink-muted">
+            <p class="text-sm text-ink-muted dark:text-zinc-400">
               <i18n-t keypath="salary.history.change.decreaseAdjusted">
                 <template v-slot:change>
-                  <span class="font-semibold text-red-600">
+                  <span class="font-semibold text-red-600 dark:text-red-400">
                     <i18n-n :value="salary.salaryChangeAdjusted / 100" format="raise" />
                   </span>
                 </template>
               </i18n-t>
             </p>
           </template>
-          <p v-else-if="salary.income === 0" class="text-sm text-ink-muted">
+          <p v-else-if="salary.income === 0" class="text-sm text-ink-muted dark:text-zinc-400">
             <i18n-t keypath="salary.history.change.remove" />
           </p>
         </div>
@@ -159,7 +159,7 @@ export default defineComponent({
         <button
           type="button"
           v-on:click="removeSalary(salary)"
-          class="mt-2 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+          class="mt-2 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-red-800 dark:hover:bg-red-950/50 dark:hover:text-red-400"
         >
           <i18n-t keypath="salary.history.remove" />
         </button>
@@ -170,9 +170,9 @@ export default defineComponent({
         v-if="
           configuration.incomeMode === 'gross-annual' || configuration.incomeMode === 'hourly-rate'
         "
-        class="absolute left-full top-0 z-10 ml-4 hidden w-64 rounded-xl border border-slate-200 bg-white p-4 shadow-card-hover group-hover/salary:block"
+        class="absolute left-full top-0 z-10 ml-4 hidden w-64 rounded-xl border border-slate-200 bg-white p-4 shadow-card-hover group-hover/salary:block dark:border-zinc-700 dark:bg-zinc-900"
       >
-        <h4 class="text-sm font-semibold text-ink-primary">
+        <h4 class="text-sm font-semibold text-ink-primary dark:text-zinc-50">
           <i18n-t keypath="salary.history.change.alternative.display">
             <template v-slot:income>
               <i18n-n :value="salary.income" format="salary" />
@@ -181,23 +181,23 @@ export default defineComponent({
               {{ configuration.currency }}
             </template>
             <template v-slot:recurrence>
-              <small class="text-xs font-normal text-ink-muted">{{
+              <small class="text-xs font-normal text-ink-muted dark:text-zinc-400">{{
                 effectiveSalaryRecurrence
               }}</small>
             </template>
           </i18n-t>
         </h4>
-        <p class="mt-1 text-xs text-ink-muted">
+        <p class="mt-1 text-xs text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.history.change.alternative.details">
             <template v-slot:income>
               {{ salary.originalSalary.income }}
             </template>
           </i18n-t>
         </p>
-        <p class="mt-1 text-xs text-ink-muted">
+        <p class="mt-1 text-xs text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.history.change.alternative.imposition.p">
             <template v-slot:link>
-              <RouterLink to="/configure" class="underline hover:text-brand-600">
+              <RouterLink to="/configure" class="underline hover:text-brand-600 dark:hover:text-brand-400">
                 <i18n-t keypath="salary.history.change.alternative.imposition.link" />
               </RouterLink>
             </template>

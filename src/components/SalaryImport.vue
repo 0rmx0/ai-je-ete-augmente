@@ -100,11 +100,11 @@ export default defineComponent({
 <template>
   <details class="group/details">
     <summary
-      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary"
+      class="cursor-pointer select-none text-sm font-medium text-ink-secondary hover:text-ink-primary dark:text-zinc-300 dark:hover:text-zinc-50"
     >
       <i18n-t keypath="salary.import.title" />
     </summary>
-    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted">
+    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400">
       <i18n-t keypath="salary.import.privacy" />
     </p>
     <form class="mt-3" v-on:submit.prevent="">
@@ -116,7 +116,7 @@ export default defineComponent({
         type="file"
         multiple
         accept=".pdf,.zip,application/pdf,application/zip"
-        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600 hover:file:bg-brand-100"
+        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600 hover:file:bg-brand-100 dark:file:bg-brand-950 dark:file:text-brand-400 dark:hover:file:bg-brand-900"
         v-on:change="onFileChange"
       />
       <button
@@ -131,11 +131,11 @@ export default defineComponent({
     <p
       v-if="errorMessage !== ''"
       role="alert"
-      class="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700"
+      class="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-700 dark:border-orange-900 dark:bg-orange-950/50 dark:text-orange-400"
     >
       {{ errorMessage }}
     </p>
-    <div v-if="importing" class="mt-3 text-sm italic text-ink-muted">
+    <div v-if="importing" class="mt-3 text-sm italic text-ink-muted dark:text-zinc-400">
       <i18n-t keypath="salary.import.processing" :plural="selectedFiles.length">
         <template v-slot:count>
           {{ selectedFiles.length }}
@@ -144,23 +144,23 @@ export default defineComponent({
     </div>
     <div v-if="results.length > 0" class="mt-3">
       <ul
-        class="mb-3 max-h-64 divide-y divide-dashed divide-slate-100 overflow-y-auto rounded-lg border border-slate-200 text-sm"
+        class="mb-3 max-h-64 divide-y divide-dashed divide-slate-100 overflow-y-auto rounded-lg border border-slate-200 text-sm dark:divide-zinc-800 dark:border-zinc-800"
       >
         <li
           v-for="(result, index) in parsedResults"
           v-bind:key="index"
           class="flex flex-row justify-between px-3 py-2"
         >
-          <span class="mr-2 truncate text-ink-secondary">{{ result.fileName }}</span>
-          <span v-if="result.date === null || result.income === null" class="text-red-600">
+          <span class="mr-2 truncate text-ink-secondary dark:text-zinc-300">{{ result.fileName }}</span>
+          <span v-if="result.date === null || result.income === null" class="text-red-600 dark:text-red-400">
             <i18n-t keypath="salary.import.unrecognized" />
           </span>
-          <span v-else-if="result.alreadyExists" class="text-orange-600">
+          <span v-else-if="result.alreadyExists" class="text-orange-600 dark:text-orange-400">
             <i18n-t keypath="salary.import.duplicate" v-bind:plural="1">
               <template v-slot:date>{{ result.date }}</template>
             </i18n-t>
           </span>
-          <span v-else class="whitespace-nowrap text-ink-primary">
+          <span v-else class="whitespace-nowrap text-ink-primary dark:text-zinc-50">
             <i18n-t keypath="salary.import.summary">
               <template v-slot:date>{{ result.date }}</template>
               <template v-slot:income>{{ result.income }}</template>

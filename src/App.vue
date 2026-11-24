@@ -27,15 +27,15 @@ export default {
 
 <template>
   <div class="flex min-h-screen flex-col">
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
       <div class="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-8">
         <RouterLink to="/" class="flex items-center gap-3">
           <span
-            class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white"
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white dark:bg-brand-500"
           >
             <i18n-t keypath="menu.logoSymbol" />
           </span>
-          <span class="text-lg font-bold tracking-tight text-ink-primary">
+          <span class="text-lg font-bold tracking-tight text-ink-primary dark:text-zinc-50">
             <i18n-t keypath="menu.title" />
           </span>
         </RouterLink>
