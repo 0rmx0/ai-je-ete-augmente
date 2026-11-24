@@ -104,7 +104,9 @@ export default defineComponent({
     >
       <i18n-t keypath="salary.import.title" />
     </summary>
-    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400">
+    <p
+      class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400"
+    >
       <i18n-t keypath="salary.import.privacy" />
     </p>
     <form class="mt-3" v-on:submit.prevent="">
@@ -116,7 +118,7 @@ export default defineComponent({
         type="file"
         multiple
         accept=".pdf,.zip,application/pdf,application/zip"
-        class="input-field file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600 hover:file:bg-brand-100 dark:file:bg-brand-950 dark:file:text-brand-400 dark:hover:file:bg-brand-900"
+        class="input-field dark:file:bg-brand-950 dark:hover:file:bg-brand-900 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600 hover:file:bg-brand-100 dark:file:text-brand-400"
         v-on:change="onFileChange"
       />
       <button
@@ -151,8 +153,13 @@ export default defineComponent({
           v-bind:key="index"
           class="flex flex-row justify-between px-3 py-2"
         >
-          <span class="mr-2 truncate text-ink-secondary dark:text-zinc-300">{{ result.fileName }}</span>
-          <span v-if="result.date === null || result.income === null" class="text-red-600 dark:text-red-400">
+          <span class="mr-2 truncate text-ink-secondary dark:text-zinc-300">{{
+            result.fileName
+          }}</span>
+          <span
+            v-if="result.date === null || result.income === null"
+            class="text-red-600 dark:text-red-400"
+          >
             <i18n-t keypath="salary.import.unrecognized" />
           </span>
           <span v-else-if="result.alreadyExists" class="text-orange-600 dark:text-orange-400">

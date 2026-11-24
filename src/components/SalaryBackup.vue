@@ -97,7 +97,9 @@ export default defineComponent({
     >
       <i18n-t keypath="salary.backup.title" />
     </summary>
-    <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400">
+    <p
+      class="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-ink-muted dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400"
+    >
       <i18n-t keypath="salary.backup.helper" />
     </p>
     <div class="mt-3 flex gap-2">
@@ -137,6 +139,8 @@ export default defineComponent({
     >
       {{ errorMessage }}
     </p>
-    <p v-if="message !== ''" class="mt-3 text-sm font-medium text-green-700 dark:text-green-400">{{ message }}</p>
+    <p v-if="message !== ''" class="mt-3 text-sm font-medium text-green-700 dark:text-green-400">
+      {{ message }}
+    </p>
   </details>
 </template>

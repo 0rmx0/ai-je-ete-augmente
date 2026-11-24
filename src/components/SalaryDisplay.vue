@@ -86,7 +86,9 @@ export default defineComponent({
       </span>
 
       <div class="min-w-0 flex-1">
-        <p class="text-xs font-medium text-ink-faint dark:text-zinc-500">{{ salary.originalSalary.date }}</p>
+        <p class="text-xs font-medium text-ink-faint dark:text-zinc-500">
+          {{ salary.originalSalary.date }}
+        </p>
         <h3 class="mt-0.5 text-base font-semibold text-ink-primary dark:text-zinc-50">
           <i18n-t keypath="salary.history.change.title">
             <template v-slot:income>
@@ -96,16 +98,24 @@ export default defineComponent({
               {{ configuration.currency }}
             </template>
             <template v-slot:recurrence>
-              <small class="text-xs font-normal text-ink-muted dark:text-zinc-400">{{ salaryRecurrence }}</small>
+              <small class="text-xs font-normal text-ink-muted dark:text-zinc-400">{{
+                salaryRecurrence
+              }}</small>
             </template>
           </i18n-t>
         </h3>
 
         <div class="mt-1 space-y-0.5">
-          <p v-if="salary.salaryChangeAdjusted === 0" class="text-sm text-ink-muted dark:text-zinc-400">
+          <p
+            v-if="salary.salaryChangeAdjusted === 0"
+            class="text-sm text-ink-muted dark:text-zinc-400"
+          >
             <i18n-t keypath="salary.history.change.base" />
           </p>
-          <p v-else-if="salary.salaryChange === Infinity" class="text-sm text-ink-muted dark:text-zinc-400">
+          <p
+            v-else-if="salary.salaryChange === Infinity"
+            class="text-sm text-ink-muted dark:text-zinc-400"
+          >
             <i18n-t keypath="salary.history.change.base" />
           </p>
           <template v-else-if="salary.salaryChange > 0">
@@ -123,7 +133,11 @@ export default defineComponent({
                 <template v-slot:change>
                   <span
                     class="font-semibold"
-                    :class="salary.salaryChangeAdjusted >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                    :class="
+                      salary.salaryChangeAdjusted >= 0
+                        ? 'text-green-600 dark:text-green-400'
+                        : 'text-red-600 dark:text-red-400'
+                    "
                   >
                     <i18n-n :value="salary.salaryChangeAdjusted / 100" format="raise" />
                   </span>
@@ -197,7 +211,10 @@ export default defineComponent({
         <p class="mt-1 text-xs text-ink-muted dark:text-zinc-400">
           <i18n-t keypath="salary.history.change.alternative.imposition.p">
             <template v-slot:link>
-              <RouterLink to="/configure" class="underline hover:text-brand-600 dark:hover:text-brand-400">
+              <RouterLink
+                to="/configure"
+                class="underline hover:text-brand-600 dark:hover:text-brand-400"
+              >
                 <i18n-t keypath="salary.history.change.alternative.imposition.link" />
               </RouterLink>
             </template>

@@ -88,7 +88,9 @@ export default defineComponent({
       <i18n-t keypath="configure.incomeMode.hourlyRate.helper" />
     </p>
 
-    <div class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/gross-annual:block dark:bg-zinc-800/50">
+    <div
+      class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/gross-annual:block dark:bg-zinc-800/50"
+    >
       <label for="incomeImposition" class="label-text !mb-1">
         <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.label" />
       </label>
@@ -107,7 +109,9 @@ export default defineComponent({
         <i18n-t keypath="configure.incomeMode.grossAnnual.imposition.helper" />
       </p>
     </div>
-    <div class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/hourly-rate:block dark:bg-zinc-800/50">
+    <div
+      class="mt-3 hidden rounded-lg bg-slate-50 p-3 peer-checked/hourly-rate:block dark:bg-zinc-800/50"
+    >
       <div class="flex flex-wrap gap-4">
         <div>
           <label for="incomeHourlyImposition" class="label-text !mb-1">
